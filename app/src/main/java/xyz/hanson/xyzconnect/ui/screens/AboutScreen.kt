@@ -36,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import xyz.hanson.fosslink.BuildConfig
+import xyz.hanson.fosslink.Links
 import xyz.hanson.fosslink.R
 
 @Composable
@@ -108,11 +109,19 @@ fun AboutScreen() {
             }
         )
         AboutLinkRow(
+            iconRes = R.drawable.ic_device_desktop_32dp,
+            title = stringResource(R.string.about_desktop_app),
+            subtitle = stringResource(R.string.about_desktop_subtitle),
+            onClick = {
+                context.startActivity(Intent(Intent.ACTION_VIEW, Links.DESKTOP_RELEASES.toUri()))
+            }
+        )
+        AboutLinkRow(
             iconRes = R.drawable.ic_baseline_code_24,
             title = stringResource(R.string.about_source_code),
-            subtitle = "github.com/hansonxyz/fosslink",
+            subtitle = "github.com/hansonxyz/fosslink-android",
             onClick = {
-                context.startActivity(Intent(Intent.ACTION_VIEW, "https://github.com/hansonxyz/fosslink".toUri()))
+                context.startActivity(Intent(Intent.ACTION_VIEW, Links.ANDROID_SOURCE.toUri()))
             }
         )
         AboutLinkRow(
@@ -120,7 +129,7 @@ fun AboutScreen() {
             title = stringResource(R.string.about_report_bug),
             subtitle = stringResource(R.string.about_help_improve),
             onClick = {
-                context.startActivity(Intent(Intent.ACTION_VIEW, "https://github.com/hansonxyz/fosslink/issues".toUri()))
+                context.startActivity(Intent(Intent.ACTION_VIEW, Links.ANDROID_ISSUES.toUri()))
             }
         )
 

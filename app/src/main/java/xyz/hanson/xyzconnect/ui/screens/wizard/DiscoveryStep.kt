@@ -1,5 +1,6 @@
 package xyz.hanson.fosslink.ui.screens.wizard
 
+import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -28,6 +30,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
+import xyz.hanson.fosslink.Links
 import xyz.hanson.fosslink.R
 import xyz.hanson.fosslink.ui.viewmodel.AppConnectionState
 
@@ -37,6 +41,7 @@ fun DiscoveryStep(
     onSelectDevice: (address: String, port: Int) -> Unit,
     onAlreadyConnected: () -> Unit
 ) {
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -195,5 +200,21 @@ fun DiscoveryStep(
                 )
             }
         }
+
+        Spacer(modifier = Modifier.height(32.dp))
+        Text(
+            text = stringResource(R.string.discovery_need_desktop),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = stringResource(R.string.discovery_get_desktop),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.clickable {
+                context.startActivity(Intent(Intent.ACTION_VIEW, Links.DESKTOP_RELEASES.toUri()))
+            }
+        )
     }
 }

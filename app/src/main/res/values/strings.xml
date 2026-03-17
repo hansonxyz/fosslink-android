@@ -42,6 +42,8 @@
     <string name="about_version">Version %1$s</string>
     <string name="about_license">License</string>
     <string name="about_mit_license">MIT License</string>
+    <string name="about_desktop_app">Get Desktop App</string>
+    <string name="about_desktop_subtitle">github.com/hansonxyz/fosslink-desktop</string>
     <string name="about_source_code">Source Code</string>
     <string name="about_report_bug">Report a Bug</string>
     <string name="about_help_improve">Help improve FossLink</string>
@@ -74,6 +76,8 @@
     <string name="discovery_same_wifi">Make sure FossLink is running on your computer and both devices are on the same Wi-Fi network.</string>
     <string name="discovery_searching">Searching for devices…</string>
     <string name="discovery_may_take_moment">This may take a few moments</string>
+    <string name="discovery_need_desktop">Need the desktop app?</string>
+    <string name="discovery_get_desktop">Download FossLink Desktop</string>
     <string name="discovery_tap_to_connect">Tap to connect</string>
 
     <!-- Wizard: Pairing -->
