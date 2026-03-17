@@ -1,0 +1,23 @@
+# Build artifacts
+build/
+.gradle/
+.kotlin/
+app/build/
+
+# Signing
+*.jks
+*.keystore
+release.keystore
+
+# Local config
+local.properties
+.env
+.env.*
+
+# IDE
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
