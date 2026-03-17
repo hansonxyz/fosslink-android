@@ -35,7 +35,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import xyz.hanson.fosslink.R
 import xyz.hanson.fosslink.ui.theme.FossLinkTheme
 
 class FindMyPhoneActivity : ComponentActivity() {
@@ -83,13 +85,13 @@ fun FindMyPhoneScreen(onDismiss: () -> Unit) {
             PulsingRings()
             Spacer(modifier = Modifier.height(48.dp))
             Text(
-                "Your phone is ringing",
+                stringResource(R.string.findphone_ringing),
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                "Tap anywhere to stop",
+                stringResource(R.string.findphone_tap_to_stop),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

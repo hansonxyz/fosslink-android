@@ -1,5 +1,6 @@
 package xyz.hanson.fosslink.ui.navigation
 
+import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
@@ -11,19 +12,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import xyz.hanson.fosslink.R
 
 data class BottomNavItem(
     val route: String,
-    val label: String,
+    @StringRes val labelRes: Int,
     val icon: ImageVector
 )
 
 val bottomNavItems = listOf(
-    BottomNavItem(NavRoutes.MAIN_HOME, "Home", Icons.Filled.Home),
-    BottomNavItem(NavRoutes.MAIN_SETTINGS, "Settings", Icons.Filled.Settings),
-    BottomNavItem(NavRoutes.MAIN_ABOUT, "About", Icons.Filled.Info),
+    BottomNavItem(NavRoutes.MAIN_HOME, R.string.nav_home, Icons.Filled.Home),
+    BottomNavItem(NavRoutes.MAIN_SETTINGS, R.string.nav_settings, Icons.Filled.Settings),
+    BottomNavItem(NavRoutes.MAIN_ABOUT, R.string.nav_about, Icons.Filled.Info),
 )
 
 @Composable
@@ -44,8 +47,8 @@ fun BottomNavBar(navController: NavController) {
                         }
                     }
                 },
-                icon = { Icon(item.icon, contentDescription = item.label) },
-                label = { Text(item.label) }
+                icon = { Icon(item.icon, contentDescription = stringResource(item.labelRes)) },
+                label = { Text(stringResource(item.labelRes)) }
             )
         }
     }

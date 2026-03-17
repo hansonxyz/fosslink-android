@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FossLink</string>
+
+    <!-- Home screen -->
+    <string name="home_subtitle">अपने कंप्यूटर से टेक्स्ट मैसेज भेजें और प्राप्त करें</string>
+    <string name="home_connection_status">कनेक्शन की स्थिति</string>
+    <string name="home_connected">कनेक्ट है</string>
+    <string name="home_wants_to_pair">पेयर करना चाहता है</string>
+    <string name="home_verify_code_desktop">सत्यापित करें कि यह कोड डेस्कटॉप पर मेल खाता है:</string>
+    <string name="home_confirm_pairing">पेयरिंग की पुष्टि करें</string>
+    <string name="home_status">स्थिति</string>
+    <string name="home_connecting">कनेक्ट हो रहा है…</string>
+    <string name="home_pairing">पेयर हो रहा है…</string>
+    <string name="home_not_connected">कनेक्ट नहीं है</string>
+    <string name="home_ensure_running">सुनिश्चित करें कि FossLink आपके कंप्यूटर पर चल रहा है</string>
+    <string name="home_permissions">अनुमतियाँ</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">सेटिंग्स</string>
+    <string name="settings_paired_desktops">पेयर किए गए डेस्कटॉप</string>
+    <string name="settings_no_paired">कोई पेयर किया गया डेस्कटॉप नहीं</string>
+    <string name="settings_connected">कनेक्ट है</string>
+    <string name="settings_offline">ऑफ़लाइन</string>
+    <string name="settings_disconnect">डिस्कनेक्ट करें</string>
+    <string name="settings_forget">भूल जाएँ</string>
+    <string name="settings_reset_setup">सेटअप रीसेट करें</string>
+    <string name="settings_advanced">उन्नत</string>
+    <string name="settings_root_integration">रूट इंटीग्रेशन</string>
+    <string name="settings_root_description">विशेषाधिकार प्राप्त कार्य सक्षम करें (सीधे URL खोलें, पठन स्थिति सिंक करें)</string>
+    <string name="settings_forget_desktop_title">डेस्कटॉप भूल जाएँ</string>
+    <string name="settings_forget_desktop_message">यह डेस्कटॉप को डिस्कनेक्ट और अनपेयर कर देगा। आपको फिर से पेयर करना होगा।</string>
+    <string name="settings_cancel">रद्द करें</string>
+    <string name="settings_reset_title">सेटअप रीसेट करें</string>
+    <string name="settings_reset_message">यह सभी डेस्कटॉप को डिस्कनेक्ट करेगा और भूल जाएगा। आपको फिर से पेयर करना होगा।</string>
+    <string name="settings_reset">रीसेट</string>
+    <string name="settings_battery">बैटरी</string>
+    <string name="settings_battery_optimization_enabled">बैटरी ऑप्टिमाइज़ेशन सक्षम है</string>
+    <string name="settings_battery_optimization_hint">यह FossLink को कनेक्ट रहने से रोक सकता है। इस ऐप के लिए बैटरी ऑप्टिमाइज़ेशन अक्षम करने के लिए टैप करें।</string>
+
+    <!-- About screen -->
+    <string name="about_version">संस्करण %1$s</string>
+    <string name="about_license">लाइसेंस</string>
+    <string name="about_mit_license">MIT लाइसेंस</string>
+    <string name="about_source_code">सोर्स कोड</string>
+    <string name="about_report_bug">बग रिपोर्ट करें</string>
+    <string name="about_help_improve">FossLink को बेहतर बनाने में मदद करें</string>
+    <string name="about_credits">श्रेय</string>
+    <string name="about_developed_by">Brian Hanson द्वारा विकसित</string>
+
+    <!-- Wizard: Welcome -->
+    <string name="welcome_title">FossLink में आपका स्वागत है</string>
+    <string name="welcome_description">अपने कंप्यूटर से टेक्स्ट मैसेज भेजें और प्राप्त करें। हम कुछ आसान चरणों में आपका सेटअप कर देंगे।</string>
+    <string name="welcome_get_started">शुरू करें</string>
+    <string name="step_welcome">स्वागत</string>
+    <string name="step_permissions">अनुमतियाँ</string>
+    <string name="step_find_device">डिवाइस खोजें</string>
+    <string name="step_pair">पेयर</string>
+    <string name="step_done">पूर्ण</string>
+
+    <!-- Wizard: Permissions -->
+    <string name="permissions_title">अनुमतियाँ</string>
+    <string name="permissions_description">FossLink को सही ढंग से काम करने के लिए इन अनुमतियों की आवश्यकता है। आप इन्हें अभी या बाद में दे सकते हैं।</string>
+    <string name="permissions_granted">दी गई</string>
+    <string name="permissions_grant">दें</string>
+    <string name="permissions_continue">जारी रखें</string>
+    <string name="permissions_skip">अभी छोड़ें</string>
+
+    <!-- Wizard: Discovery -->
+    <string name="discovery_title">अपना कंप्यूटर खोजें</string>
+    <string name="discovery_already_connected">पहले से कनेक्ट है!</string>
+    <string name="discovery_desktop_fallback">डेस्कटॉप</string>
+    <string name="discovery_continue">जारी रखें</string>
+    <string name="discovery_same_wifi">सुनिश्चित करें कि FossLink आपके कंप्यूटर पर चल रहा है और दोनों डिवाइस एक ही Wi-Fi नेटवर्क पर हैं।</string>
+    <string name="discovery_searching">डिवाइस खोज रहे हैं…</string>
+    <string name="discovery_may_take_moment">इसमें कुछ क्षण लग सकते हैं</string>
+    <string name="discovery_tap_to_connect">कनेक्ट करने के लिए टैप करें</string>
+
+    <!-- Wizard: Pairing -->
+    <string name="pairing_title">पेयरिंग</string>
+    <string name="pairing_verify_code">सत्यापित करें कि यह कोड आपके कंप्यूटर पर मेल खाता है</string>
+    <string name="pairing_confirm_both">पेयरिंग पूरी करने के लिए दोनों डिवाइस पर पुष्टि करें</string>
+    <string name="pairing_confirm">पुष्टि करें</string>
+    <string name="pairing_cancel">रद्द करें</string>
+    <string name="pairing_connecting_to">%1$s से कनेक्ट हो रहा है…</string>
+    <string name="pairing_waiting">कनेक्शन की प्रतीक्षा में…</string>
+
+    <!-- Wizard: Success -->
+    <string name="success_title">सब तैयार है!</string>
+    <string name="success_message">%1$s के साथ सफलतापूर्वक पेयर हो गया। अब आप अपने कंप्यूटर से मैसेज भेज और प्राप्त कर सकते हैं।</string>
+    <string name="success_done">पूर्ण</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_home">होम</string>
+    <string name="nav_settings">सेटिंग्स</string>
+    <string name="nav_about">परिचय</string>
+
+    <!-- Permission names and descriptions (MainViewModel) -->
+    <string name="perm_sms">SMS</string>
+    <string name="perm_sms_desc">टेक्स्ट मैसेज पढ़ें और भेजें</string>
+    <string name="perm_contacts">संपर्क</string>
+    <string name="perm_contacts_desc">बातचीत में संपर्क नाम दिखाएँ</string>
+    <string name="perm_phone">फ़ोन</string>
+    <string name="perm_phone_desc">इनकमिंग कॉल का पता लगाएँ</string>
+    <string name="perm_notifications">सूचनाएँ</string>
+    <string name="perm_notifications_desc">कनेक्शन और पेयरिंग सूचनाएँ दिखाएँ</string>
+    <string name="perm_files_access">फ़ाइल एक्सेस</string>
+    <string name="perm_files_desc">डेस्कटॉप से फ़ोन गैलरी और फ़ाइलें ब्राउज़ करें</string>
+    <string name="perm_battery">बैटरी</string>
+    <string name="perm_battery_desc">Android को कनेक्शन थ्रॉटल करने से रोकें</string>
+    <string name="perm_autostart">ऑटोस्टार्ट</string>
+    <string name="perm_autostart_desc">फ़ोन रीबूट होने के बाद स्वचालित रूप से शुरू हो</string>
+
+    <!-- Find My Phone -->
+    <string name="findphone_ringing">आपका फ़ोन बज रहा है</string>
+    <string name="findphone_tap_to_stop">रोकने के लिए कहीं भी टैप करें</string>
+
+    <!-- Notifications (ConnectionService) -->
+    <string name="notification_searching">डेस्कटॉप खोज रहे हैं…</string>
+    <string name="notification_connected_to">%1$s से कनेक्ट है</string>
+    <string name="notification_connected_multiple">%1$d डेस्कटॉप से कनेक्ट है</string>
+    <string name="notification_channel_connection">कनेक्शन की स्थिति</string>
+    <string name="notification_channel_connection_desc">FossLink कनेक्शन की स्थिति दिखाता है</string>
+    <string name="notification_channel_url">URL शेयरिंग</string>
+    <string name="notification_channel_url_desc">डेस्कटॉप से प्राप्त URL</string>
+</resources>

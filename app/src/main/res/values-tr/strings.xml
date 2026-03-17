@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FossLink</string>
+
+    <!-- Home screen -->
+    <string name="home_subtitle">Bilgisayarınızdan kısa mesaj gönderin ve alın</string>
+    <string name="home_connection_status">Bağlantı Durumu</string>
+    <string name="home_connected">Bağlandı</string>
+    <string name="home_wants_to_pair">Eşleşmek istiyor</string>
+    <string name="home_verify_code_desktop">Bu kodun masaüstünüzdeki kodla eşleştiğini doğrulayın:</string>
+    <string name="home_confirm_pairing">Eşleşmeyi Onayla</string>
+    <string name="home_status">Durum</string>
+    <string name="home_connecting">Bağlanıyor…</string>
+    <string name="home_pairing">Eşleşiyor…</string>
+    <string name="home_not_connected">Bağlı değil</string>
+    <string name="home_ensure_running">FossLink\'in bilgisayarınızda çalıştığından emin olun</string>
+    <string name="home_permissions">İzinler</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_paired_desktops">Eşleşmiş Masaüstleri</string>
+    <string name="settings_no_paired">Eşleşmiş masaüstü yok</string>
+    <string name="settings_connected">Bağlandı</string>
+    <string name="settings_offline">Çevrimdışı</string>
+    <string name="settings_disconnect">Bağlantıyı Kes</string>
+    <string name="settings_forget">Unut</string>
+    <string name="settings_reset_setup">Kurulumu Sıfırla</string>
+    <string name="settings_advanced">Gelişmiş</string>
+    <string name="settings_root_integration">Root Entegrasyonu</string>
+    <string name="settings_root_description">Ayrıcalıklı işlemleri etkinleştir (URL\'leri doğrudan aç, okundu durumunu eşitle)</string>
+    <string name="settings_forget_desktop_title">Masaüstünü Unut</string>
+    <string name="settings_forget_desktop_message">Bu işlem masaüstünün bağlantısını kesecek ve eşleşmesini kaldıracaktır. Yeniden eşleşmeniz gerekecek.</string>
+    <string name="settings_cancel">İptal</string>
+    <string name="settings_reset_title">Kurulumu Sıfırla</string>
+    <string name="settings_reset_message">Bu işlem tüm masaüstlerinin bağlantısını kesecek ve eşleşmelerini kaldıracaktır. Yeniden eşleşmeniz gerekecek.</string>
+    <string name="settings_reset">Sıfırla</string>
+    <string name="settings_battery">Pil</string>
+    <string name="settings_battery_optimization_enabled">Pil optimizasyonu etkin</string>
+    <string name="settings_battery_optimization_hint">Bu durum FossLink\'in bağlı kalmasını engelleyebilir. Bu uygulama için pil optimizasyonunu devre dışı bırakmak üzere dokunun.</string>
+
+    <!-- About screen -->
+    <string name="about_version">Sürüm %1$s</string>
+    <string name="about_license">Lisans</string>
+    <string name="about_mit_license">MIT Lisansı</string>
+    <string name="about_source_code">Kaynak Kodu</string>
+    <string name="about_report_bug">Hata Bildir</string>
+    <string name="about_help_improve">FossLink\'i geliştirmemize yardımcı olun</string>
+    <string name="about_credits">Katkıda Bulunanlar</string>
+    <string name="about_developed_by">Brian Hanson tarafından geliştirildi</string>
+
+    <!-- Wizard: Welcome -->
+    <string name="welcome_title">FossLink\'e Hoş Geldiniz</string>
+    <string name="welcome_description">Bilgisayarınızdan kısa mesaj gönderin ve alın. Birkaç hızlı adımda sizi hazırlayacağız.</string>
+    <string name="welcome_get_started">Başlayın</string>
+    <string name="step_welcome">Hoş Geldiniz</string>
+    <string name="step_permissions">İzinler</string>
+    <string name="step_find_device">Cihaz Bul</string>
+    <string name="step_pair">Eşleştir</string>
+    <string name="step_done">Tamamlandı</string>
+
+    <!-- Wizard: Permissions -->
+    <string name="permissions_title">İzinler</string>
+    <string name="permissions_description">FossLink\'in düzgün çalışması için bu izinlere ihtiyacı var. Şimdi veya daha sonra verebilirsiniz.</string>
+    <string name="permissions_granted">Verildi</string>
+    <string name="permissions_grant">İzin Ver</string>
+    <string name="permissions_continue">Devam Et</string>
+    <string name="permissions_skip">Şimdilik atla</string>
+
+    <!-- Wizard: Discovery -->
+    <string name="discovery_title">Bilgisayarınızı Bulun</string>
+    <string name="discovery_already_connected">Zaten bağlı!</string>
+    <string name="discovery_desktop_fallback">Masaüstü</string>
+    <string name="discovery_continue">Devam Et</string>
+    <string name="discovery_same_wifi">FossLink\'in bilgisayarınızda çalıştığından ve her iki cihazın da aynı Wi-Fi ağında olduğundan emin olun.</string>
+    <string name="discovery_searching">Cihazlar aranıyor…</string>
+    <string name="discovery_may_take_moment">Bu birkaç dakika sürebilir</string>
+    <string name="discovery_tap_to_connect">Bağlanmak için dokunun</string>
+
+    <!-- Wizard: Pairing -->
+    <string name="pairing_title">Eşleşme</string>
+    <string name="pairing_verify_code">Bu kodun bilgisayarınızdaki kodla eşleştiğini doğrulayın</string>
+    <string name="pairing_confirm_both">Eşleşmeyi tamamlamak için her iki cihazda da onaylayın</string>
+    <string name="pairing_confirm">Onayla</string>
+    <string name="pairing_cancel">İptal</string>
+    <string name="pairing_connecting_to">%1$s cihazına bağlanılıyor…</string>
+    <string name="pairing_waiting">Bağlantı bekleniyor…</string>
+
+    <!-- Wizard: Success -->
+    <string name="success_title">Her şey hazır!</string>
+    <string name="success_message">%1$s ile başarıyla eşleştirildi. Artık bilgisayarınızdan mesaj gönderip alabilirsiniz.</string>
+    <string name="success_done">Tamamlandı</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_home">Ana Sayfa</string>
+    <string name="nav_settings">Ayarlar</string>
+    <string name="nav_about">Hakkında</string>
+
+    <!-- Permission names and descriptions (MainViewModel) -->
+    <string name="perm_sms">SMS</string>
+    <string name="perm_sms_desc">Kısa mesajları oku ve gönder</string>
+    <string name="perm_contacts">Kişiler</string>
+    <string name="perm_contacts_desc">Konuşmalarda kişi adlarını göster</string>
+    <string name="perm_phone">Telefon</string>
+    <string name="perm_phone_desc">Gelen aramaları algıla</string>
+    <string name="perm_notifications">Bildirimler</string>
+    <string name="perm_notifications_desc">Bağlantı ve eşleşme bildirimlerini göster</string>
+    <string name="perm_files_access">Dosya Erişimi</string>
+    <string name="perm_files_desc">Masaüstünden telefon galerisine ve dosyalarına göz at</string>
+    <string name="perm_battery">Pil</string>
+    <string name="perm_battery_desc">Android\'in bağlantıları kısıtlamasını önle</string>
+    <string name="perm_autostart">Otomatik Başlatma</string>
+    <string name="perm_autostart_desc">Telefon yeniden başlatıldıktan sonra otomatik olarak başla</string>
+
+    <!-- Find My Phone -->
+    <string name="findphone_ringing">Telefonunuz çalıyor</string>
+    <string name="findphone_tap_to_stop">Durdurmak için herhangi bir yere dokunun</string>
+
+    <!-- Notifications (ConnectionService) -->
+    <string name="notification_searching">Masaüstü aranıyor…</string>
+    <string name="notification_connected_to">%1$s cihazına bağlandı</string>
+    <string name="notification_connected_multiple">%1$d masaüstüne bağlandı</string>
+    <string name="notification_channel_connection">Bağlantı Durumu</string>
+    <string name="notification_channel_connection_desc">FossLink bağlantı durumunu gösterir</string>
+    <string name="notification_channel_url">URL Paylaşımı</string>
+    <string name="notification_channel_url_desc">Masaüstünden alınan URL\'ler</string>
+</resources>

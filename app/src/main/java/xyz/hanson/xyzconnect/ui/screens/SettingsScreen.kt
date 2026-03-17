@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import xyz.hanson.fosslink.R
@@ -61,21 +62,21 @@ fun SettingsScreen(
             .padding(16.dp)
     ) {
         Text(
-            text = "Settings",
+            text = stringResource(R.string.settings_title),
             style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(24.dp))
 
         // Paired desktops section (shows all paired, online or offline)
-        SectionHeader("Paired Desktops")
+        SectionHeader(stringResource(R.string.settings_paired_desktops))
         val connectedIds = if (appState is AppConnectionState.Connected) {
             appState.desktops.map { it.deviceId }.toSet()
         } else emptySet()
 
         if (pairedDevices.isEmpty()) {
             Text(
-                text = "No paired desktops",
+                text = stringResource(R.string.settings_no_paired),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(vertical = 8.dp)
@@ -107,7 +108,7 @@ fun SettingsScreen(
                                     fontWeight = FontWeight.Medium
                                 )
                                 Text(
-                                    text = if (isOnline) "Connected" else "Offline",
+                                    text = if (isOnline) stringResource(R.string.settings_connected) else stringResource(R.string.settings_offline),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = if (isOnline) Color(0xFF4CAF50)
                                            else MaterialTheme.colorScheme.onSurfaceVariant
@@ -121,7 +122,7 @@ fun SettingsScreen(
                                     onClick = { onDisconnect(desktop.deviceId) },
                                     modifier = Modifier.height(36.dp)
                                 ) {
-                                    Text("Disconnect", style = MaterialTheme.typography.labelMedium)
+                                    Text(stringResource(R.string.settings_disconnect), style = MaterialTheme.typography.labelMedium)
                                 }
                                 Spacer(modifier = Modifier.width(8.dp))
                             }
@@ -129,7 +130,7 @@ fun SettingsScreen(
                                 onClick = { forgetDeviceId = desktop.deviceId },
                                 modifier = Modifier.height(36.dp)
                             ) {
-                                Text("Forget", style = MaterialTheme.typography.labelMedium)
+                                Text(stringResource(R.string.settings_forget), style = MaterialTheme.typography.labelMedium)
                             }
                         }
                     }
@@ -140,13 +141,13 @@ fun SettingsScreen(
 
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedButton(onClick = { showResetDialog = true }) {
-            Text("Reset Setup")
+            Text(stringResource(R.string.settings_reset_setup))
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
         // Root integration
-        SectionHeader("Advanced")
+        SectionHeader(stringResource(R.string.settings_advanced))
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
@@ -162,12 +163,12 @@ fun SettingsScreen(
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "Root Integration",
+                        text = stringResource(R.string.settings_root_integration),
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Medium
                     )
                     Text(
-                        text = "Enable privileged operations (open URLs directly, sync read status)",
+                        text = stringResource(R.string.settings_root_description),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -188,19 +189,19 @@ fun SettingsScreen(
     forgetDeviceId?.let { deviceId ->
         AlertDialog(
             onDismissRequest = { forgetDeviceId = null },
-            title = { Text("Forget Desktop") },
-            text = { Text("This will disconnect and unpair this desktop. You'll need to pair again.") },
+            title = { Text(stringResource(R.string.settings_forget_desktop_title)) },
+            text = { Text(stringResource(R.string.settings_forget_desktop_message)) },
             confirmButton = {
                 TextButton(onClick = {
                     forgetDeviceId = null
                     onForgetDesktop(deviceId)
                 }) {
-                    Text("Forget", color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(R.string.settings_forget), color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { forgetDeviceId = null }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.settings_cancel))
                 }
             }
         )
@@ -210,19 +211,19 @@ fun SettingsScreen(
     if (showResetDialog) {
         AlertDialog(
             onDismissRequest = { showResetDialog = false },
-            title = { Text("Reset Setup") },
-            text = { Text("This will disconnect and forget all desktops. You'll need to pair again.") },
+            title = { Text(stringResource(R.string.settings_reset_title)) },
+            text = { Text(stringResource(R.string.settings_reset_message)) },
             confirmButton = {
                 TextButton(onClick = {
                     showResetDialog = false
                     onForgetAll()
                 }) {
-                    Text("Reset", color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(R.string.settings_reset), color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showResetDialog = false }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.settings_cancel))
                 }
             }
         )
@@ -246,7 +247,7 @@ private fun BatteryOptimizationSection(context: Context) {
     val isIgnoring = pm.isIgnoringBatteryOptimizations(context.packageName)
 
     if (!isIgnoring) {
-        SectionHeader("Battery")
+        SectionHeader(stringResource(R.string.settings_battery))
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -261,12 +262,12 @@ private fun BatteryOptimizationSection(context: Context) {
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Battery optimization is enabled",
+                    text = stringResource(R.string.settings_battery_optimization_enabled),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
-                    text = "This may prevent FossLink from staying connected. Tap to disable battery optimization for this app.",
+                    text = stringResource(R.string.settings_battery_optimization_hint),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

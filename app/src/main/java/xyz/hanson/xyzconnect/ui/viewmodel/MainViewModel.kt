@@ -12,11 +12,13 @@ import android.os.Environment
 import android.os.IBinder
 import android.os.PowerManager
 import android.util.Log
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import xyz.hanson.fosslink.R
 import xyz.hanson.fosslink.network.*
 import xyz.hanson.fosslink.service.ConnectionService
 import xyz.hanson.fosslink.service.DesktopConnection
@@ -24,6 +26,11 @@ import xyz.hanson.fosslink.service.DesktopConnection
 @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 class MainViewModel(app: Application) : AndroidViewModel(app) {
     private val TAG = "MainViewModel"
+
+    /** Set to true to skip setup wizard and fake all permissions/connections for screenshots. */
+    companion object {
+        const val DEMO_MODE = false
+    }
 
     private val _service = MutableStateFlow<ConnectionService?>(null)
     private var bound = false
@@ -83,24 +90,41 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     init {
-        _isSetupComplete.value = prefs.getBoolean("setup_complete", false)
-        refreshPermissions()
+        if (DEMO_MODE) {
+            _isSetupComplete.value = true
+            _appState.value = AppConnectionState.Connected(
+                desktops = listOf(DesktopInfo("demo-desktop", "My PC")),
+                pendingPairing = null
+            )
+            _permissions.value = listOf(
+                PermissionItem(name = str(R.string.perm_sms), permission = "", granted = true, description = str(R.string.perm_sms_desc)),
+                PermissionItem(name = str(R.string.perm_contacts), permission = "", granted = true, description = str(R.string.perm_contacts_desc)),
+                PermissionItem(name = str(R.string.perm_phone), permission = "", granted = true, description = str(R.string.perm_phone_desc)),
+                PermissionItem(name = str(R.string.perm_notifications), permission = "", granted = true, description = str(R.string.perm_notifications_desc)),
+                PermissionItem(name = str(R.string.perm_files_access), permission = "", granted = true, description = str(R.string.perm_files_desc)),
+                PermissionItem(name = str(R.string.perm_battery), permission = "", granted = true, description = str(R.string.perm_battery_desc)),
+                PermissionItem(name = str(R.string.perm_autostart), permission = "", granted = true, description = str(R.string.perm_autostart_desc)),
+            )
+        } else {
+            _isSetupComplete.value = prefs.getBoolean("setup_complete", false)
+            refreshPermissions()
 
-        val context = getApplication<Application>()
-        val intent = Intent(context, ConnectionService::class.java)
-        context.startForegroundService(intent)
-        context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+            val context = getApplication<Application>()
+            val intent = Intent(context, ConnectionService::class.java)
+            context.startForegroundService(intent)
+            context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
 
-        // Derive AppConnectionState from combined flows
-        viewModelScope.launch {
-            combine(
-                desktopConnections,
-                _discoveredDevices,
-                pairedDeviceIds,
-            ) { connections, devices, _ ->
-                deriveAppState(connections, devices)
-            }.collect { state ->
-                _appState.value = state
+            // Derive AppConnectionState from combined flows
+            viewModelScope.launch {
+                combine(
+                    desktopConnections,
+                    _discoveredDevices,
+                    pairedDeviceIds,
+                ) { connections, devices, _ ->
+                    deriveAppState(connections, devices)
+                }.collect { state ->
+                    _appState.value = state
+                }
             }
         }
     }
@@ -176,47 +200,48 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun refreshPermissions() {
+        if (DEMO_MODE) return
         val items = mutableListOf(
             PermissionItem(
-                name = "SMS",
+                name = str(R.string.perm_sms),
                 permission = Manifest.permission.READ_SMS,
                 granted = isPermGranted(Manifest.permission.READ_SMS) &&
                           isPermGranted(Manifest.permission.SEND_SMS),
-                description = "Read and send text messages",
+                description = str(R.string.perm_sms_desc),
                 relatedPermissions = listOf(Manifest.permission.SEND_SMS)
             ),
             PermissionItem(
-                name = "Contacts",
+                name = str(R.string.perm_contacts),
                 permission = Manifest.permission.READ_CONTACTS,
                 granted = isPermGranted(Manifest.permission.READ_CONTACTS) &&
                           isPermGranted(Manifest.permission.WRITE_CONTACTS),
-                description = "Show contact names in conversations",
+                description = str(R.string.perm_contacts_desc),
                 relatedPermissions = listOf(Manifest.permission.WRITE_CONTACTS)
             ),
             PermissionItem(
-                name = "Phone",
+                name = str(R.string.perm_phone),
                 permission = Manifest.permission.READ_PHONE_STATE,
                 granted = isPermGranted(Manifest.permission.READ_PHONE_STATE),
-                description = "Detect incoming calls"
+                description = str(R.string.perm_phone_desc)
             ),
         )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             items.add(
                 PermissionItem(
-                    name = "Notifications",
+                    name = str(R.string.perm_notifications),
                     permission = Manifest.permission.POST_NOTIFICATIONS,
                     granted = isPermGranted(Manifest.permission.POST_NOTIFICATIONS),
-                    description = "Show connection and pairing notifications"
+                    description = str(R.string.perm_notifications_desc)
                 )
             )
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             items.add(
                 PermissionItem(
-                    name = "Files Access",
+                    name = str(R.string.perm_files_access),
                     permission = Manifest.permission.MANAGE_EXTERNAL_STORAGE,
                     granted = Environment.isExternalStorageManager(),
-                    description = "Browse phone gallery and files from desktop",
+                    description = str(R.string.perm_files_desc),
                     isSpecialAccess = true,
                     specialAction = SpecialAction.FILES_ACCESS
                 )
@@ -225,20 +250,20 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         val pm = getApplication<Application>().getSystemService(Context.POWER_SERVICE) as PowerManager
         items.add(
             PermissionItem(
-                name = "Battery",
+                name = str(R.string.perm_battery),
                 permission = "battery_optimization",
                 granted = pm.isIgnoringBatteryOptimizations(getApplication<Application>().packageName),
-                description = "Prevent Android from throttling connections",
+                description = str(R.string.perm_battery_desc),
                 isSpecialAccess = true,
                 specialAction = SpecialAction.BATTERY_OPTIMIZATION
             )
         )
         items.add(
             PermissionItem(
-                name = "Autostart",
+                name = str(R.string.perm_autostart),
                 permission = "autostart",
                 granted = true,
-                description = "Start automatically after phone reboots"
+                description = str(R.string.perm_autostart_desc)
             )
         )
         _permissions.value = items
@@ -256,6 +281,8 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             getApplication(), permission
         ) == PackageManager.PERMISSION_GRANTED
     }
+
+    private fun str(@StringRes id: Int) = getApplication<Application>().getString(id)
 
     override fun onCleared() {
         super.onCleared()

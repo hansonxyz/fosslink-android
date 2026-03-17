@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
@@ -78,17 +79,17 @@ fun AboutScreen() {
             ) {
                 Image(
                     painter = painterResource(R.drawable.ic_launcher_foreground),
-                    contentDescription = "FossLink",
+                    contentDescription = stringResource(R.string.app_name),
                     modifier = Modifier.size(72.dp)
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = "FossLink",
+                    text = stringResource(R.string.app_name),
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "Version ${BuildConfig.VERSION_NAME}",
+                    text = stringResource(R.string.about_version, BuildConfig.VERSION_NAME),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -100,15 +101,15 @@ fun AboutScreen() {
         // Links
         AboutLinkRow(
             iconRes = R.drawable.ic_baseline_gavel_24,
-            title = "License",
-            subtitle = "MIT License",
+            title = stringResource(R.string.about_license),
+            subtitle = stringResource(R.string.about_mit_license),
             onClick = {
                 context.startActivity(Intent(Intent.ACTION_VIEW, "https://opensource.org/licenses/MIT".toUri()))
             }
         )
         AboutLinkRow(
             iconRes = R.drawable.ic_baseline_code_24,
-            title = "Source Code",
+            title = stringResource(R.string.about_source_code),
             subtitle = "github.com/hansonxyz/fosslink",
             onClick = {
                 context.startActivity(Intent(Intent.ACTION_VIEW, "https://github.com/hansonxyz/fosslink".toUri()))
@@ -116,8 +117,8 @@ fun AboutScreen() {
         )
         AboutLinkRow(
             iconRes = R.drawable.ic_baseline_bug_report_24,
-            title = "Report a Bug",
-            subtitle = "Help improve FossLink",
+            title = stringResource(R.string.about_report_bug),
+            subtitle = stringResource(R.string.about_help_improve),
             onClick = {
                 context.startActivity(Intent(Intent.ACTION_VIEW, "https://github.com/hansonxyz/fosslink/issues".toUri()))
             }
@@ -127,14 +128,14 @@ fun AboutScreen() {
 
         // Credits
         Text(
-            text = "Credits",
+            text = stringResource(R.string.about_credits),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Developed by Brian Hanson",
+            text = stringResource(R.string.about_developed_by),
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.fillMaxWidth()
         )

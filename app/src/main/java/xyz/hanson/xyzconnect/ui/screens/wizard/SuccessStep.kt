@@ -17,10 +17,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import xyz.hanson.fosslink.R
 
 @Composable
 fun SuccessStep(deviceName: String, onDone: () -> Unit) {
@@ -39,13 +41,13 @@ fun SuccessStep(deviceName: String, onDone: () -> Unit) {
         )
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = "You're all set!",
+            text = stringResource(R.string.success_title),
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = "Successfully paired with $deviceName. You can now send and receive messages from your computer.",
+            text = stringResource(R.string.success_message, deviceName),
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -55,7 +57,7 @@ fun SuccessStep(deviceName: String, onDone: () -> Unit) {
             onClick = onDone,
             modifier = Modifier.fillMaxWidth(0.6f)
         ) {
-            Text("Done")
+            Text(stringResource(R.string.success_done))
         }
     }
 }

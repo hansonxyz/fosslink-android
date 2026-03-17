@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import xyz.hanson.fosslink.R
@@ -70,20 +71,20 @@ fun HomeScreen(
             .padding(16.dp)
     ) {
         Text(
-            text = "FossLink",
+            text = stringResource(R.string.app_name),
             style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            text = "Send and receive text messages from your computer",
+            text = stringResource(R.string.home_subtitle),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Spacer(modifier = Modifier.height(24.dp))
 
         // Connection status section
-        SectionHeader("Connection Status")
+        SectionHeader(stringResource(R.string.home_connection_status))
         when (appState) {
             is AppConnectionState.Connected -> {
                 appState.desktops.forEach { desktop ->
@@ -113,7 +114,7 @@ fun HomeScreen(
                                     fontWeight = FontWeight.Medium
                                 )
                                 Text(
-                                    text = "Connected",
+                                    text = stringResource(R.string.home_connected),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF4CAF50)
                                 )
@@ -147,7 +148,7 @@ fun HomeScreen(
                                         fontWeight = FontWeight.Medium
                                     )
                                     Text(
-                                        text = "Wants to pair",
+                                        text = stringResource(R.string.home_wants_to_pair),
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.primary
                                     )
@@ -155,7 +156,7 @@ fun HomeScreen(
                             }
                             Spacer(modifier = Modifier.height(12.dp))
                             Text(
-                                text = "Verify this code matches on the desktop:",
+                                text = stringResource(R.string.home_verify_code_desktop),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -171,7 +172,7 @@ fun HomeScreen(
                                 onClick = { onConfirmPairing(pairing.pairingCode) },
                                 modifier = Modifier.fillMaxWidth()
                             ) {
-                                Text("Confirm Pairing")
+                                Text(stringResource(R.string.home_confirm_pairing))
                             }
                         }
                     }
@@ -179,20 +180,20 @@ fun HomeScreen(
                 }
             }
             is AppConnectionState.Connecting -> {
-                InfoRow(label = "Status", value = "Connecting...", valueColor = Color(0xFFFF9800))
+                InfoRow(label = stringResource(R.string.home_status), value = stringResource(R.string.home_connecting), valueColor = Color(0xFFFF9800))
             }
             is AppConnectionState.PairingRequested -> {
-                InfoRow(label = "Status", value = "Pairing...", valueColor = Color(0xFFFF9800))
+                InfoRow(label = stringResource(R.string.home_status), value = stringResource(R.string.home_pairing), valueColor = Color(0xFFFF9800))
             }
             else -> {
                 Text(
-                    text = "Not connected",
+                    text = stringResource(R.string.home_not_connected),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
                 Text(
-                    text = "Make sure FossLink is running on your computer",
+                    text = stringResource(R.string.home_ensure_running),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -202,7 +203,7 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         // Permissions checklist
-        SectionHeader("Permissions")
+        SectionHeader(stringResource(R.string.home_permissions))
         permissions.forEach { perm ->
             PermissionRow(perm, onRequestPermission)
         }

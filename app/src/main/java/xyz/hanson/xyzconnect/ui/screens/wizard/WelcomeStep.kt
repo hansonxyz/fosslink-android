@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -32,19 +33,19 @@ fun WelcomeStep(onNext: () -> Unit) {
     ) {
         Image(
             painter = painterResource(R.drawable.ic_launcher_foreground),
-            contentDescription = "FossLink",
+            contentDescription = stringResource(R.string.app_name),
             modifier = Modifier.size(96.dp)
         )
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = "Welcome to FossLink",
+            text = stringResource(R.string.welcome_title),
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = "Send and receive text messages from your computer. We'll get you set up in a few quick steps.",
+            text = stringResource(R.string.welcome_description),
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -54,7 +55,7 @@ fun WelcomeStep(onNext: () -> Unit) {
         StepIndicator(
             currentStep = 1,
             totalSteps = 5,
-            stepLabels = listOf("Welcome", "Permissions", "Find Device", "Pair", "Done")
+            stepLabels = listOf(stringResource(R.string.step_welcome), stringResource(R.string.step_permissions), stringResource(R.string.step_find_device), stringResource(R.string.step_pair), stringResource(R.string.step_done))
         )
 
         Spacer(modifier = Modifier.height(48.dp))
@@ -62,7 +63,7 @@ fun WelcomeStep(onNext: () -> Unit) {
             onClick = onNext,
             modifier = Modifier.fillMaxWidth(0.6f)
         ) {
-            Text("Get Started")
+            Text(stringResource(R.string.welcome_get_started))
         }
     }
 }

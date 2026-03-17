@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FossLink</string>
+
+    <!-- Home screen -->
+    <string name="home_subtitle">从电脑上收发短信</string>
+    <string name="home_connection_status">连接状态</string>
+    <string name="home_connected">已连接</string>
+    <string name="home_wants_to_pair">请求配对</string>
+    <string name="home_verify_code_desktop">请确认此代码与桌面端显示的一致：</string>
+    <string name="home_confirm_pairing">确认配对</string>
+    <string name="home_status">状态</string>
+    <string name="home_connecting">正在连接…</string>
+    <string name="home_pairing">正在配对…</string>
+    <string name="home_not_connected">未连接</string>
+    <string name="home_ensure_running">请确保 FossLink 正在电脑上运行</string>
+    <string name="home_permissions">权限</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">设置</string>
+    <string name="settings_paired_desktops">已配对的桌面</string>
+    <string name="settings_no_paired">没有已配对的桌面</string>
+    <string name="settings_connected">已连接</string>
+    <string name="settings_offline">离线</string>
+    <string name="settings_disconnect">断开连接</string>
+    <string name="settings_forget">忘记</string>
+    <string name="settings_reset_setup">重置设置</string>
+    <string name="settings_advanced">高级</string>
+    <string name="settings_root_integration">Root 集成</string>
+    <string name="settings_root_description">启用特权操作（直接打开链接、同步已读状态）</string>
+    <string name="settings_forget_desktop_title">忘记桌面</string>
+    <string name="settings_forget_desktop_message">此操作将断开连接并取消与该桌面的配对。您需要重新配对。</string>
+    <string name="settings_cancel">取消</string>
+    <string name="settings_reset_title">重置设置</string>
+    <string name="settings_reset_message">此操作将断开连接并忘记所有桌面。您需要重新配对。</string>
+    <string name="settings_reset">重置</string>
+    <string name="settings_battery">电池</string>
+    <string name="settings_battery_optimization_enabled">电池优化已启用</string>
+    <string name="settings_battery_optimization_hint">这可能会导致 FossLink 无法保持连接。点击以禁用此应用的电池优化。</string>
+
+    <!-- About screen -->
+    <string name="about_version">版本 %1$s</string>
+    <string name="about_license">许可证</string>
+    <string name="about_mit_license">MIT 许可证</string>
+    <string name="about_source_code">源代码</string>
+    <string name="about_report_bug">报告问题</string>
+    <string name="about_help_improve">帮助改进 FossLink</string>
+    <string name="about_credits">致谢</string>
+    <string name="about_developed_by">由 Brian Hanson 开发</string>
+
+    <!-- Wizard: Welcome -->
+    <string name="welcome_title">欢迎使用 FossLink</string>
+    <string name="welcome_description">从电脑上收发短信。我们将通过几个简单的步骤帮您完成设置。</string>
+    <string name="welcome_get_started">开始</string>
+    <string name="step_welcome">欢迎</string>
+    <string name="step_permissions">权限</string>
+    <string name="step_find_device">查找设备</string>
+    <string name="step_pair">配对</string>
+    <string name="step_done">完成</string>
+
+    <!-- Wizard: Permissions -->
+    <string name="permissions_title">权限</string>
+    <string name="permissions_description">FossLink 需要这些权限才能正常工作。您可以现在授予或稍后授予。</string>
+    <string name="permissions_granted">已授予</string>
+    <string name="permissions_grant">授予</string>
+    <string name="permissions_continue">继续</string>
+    <string name="permissions_skip">暂时跳过</string>
+
+    <!-- Wizard: Discovery -->
+    <string name="discovery_title">查找您的电脑</string>
+    <string name="discovery_already_connected">已连接！</string>
+    <string name="discovery_desktop_fallback">桌面</string>
+    <string name="discovery_continue">继续</string>
+    <string name="discovery_same_wifi">请确保 FossLink 正在电脑上运行，且两台设备连接到同一 Wi-Fi 网络。</string>
+    <string name="discovery_searching">正在搜索设备…</string>
+    <string name="discovery_may_take_moment">这可能需要一些时间</string>
+    <string name="discovery_tap_to_connect">点击以连接</string>
+
+    <!-- Wizard: Pairing -->
+    <string name="pairing_title">配对</string>
+    <string name="pairing_verify_code">请确认此代码与电脑上显示的一致</string>
+    <string name="pairing_confirm_both">在两台设备上确认以完成配对</string>
+    <string name="pairing_confirm">确认</string>
+    <string name="pairing_cancel">取消</string>
+    <string name="pairing_connecting_to">正在连接到 %1$s…</string>
+    <string name="pairing_waiting">等待连接…</string>
+
+    <!-- Wizard: Success -->
+    <string name="success_title">一切就绪！</string>
+    <string name="success_message">已成功与 %1$s 配对。您现在可以从电脑上收发短信了。</string>
+    <string name="success_done">完成</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_home">首页</string>
+    <string name="nav_settings">设置</string>
+    <string name="nav_about">关于</string>
+
+    <!-- Permission names and descriptions (MainViewModel) -->
+    <string name="perm_sms">短信</string>
+    <string name="perm_sms_desc">读取和发送短信</string>
+    <string name="perm_contacts">联系人</string>
+    <string name="perm_contacts_desc">在对话中显示联系人姓名</string>
+    <string name="perm_phone">电话</string>
+    <string name="perm_phone_desc">检测来电</string>
+    <string name="perm_notifications">通知</string>
+    <string name="perm_notifications_desc">显示连接和配对通知</string>
+    <string name="perm_files_access">文件访问</string>
+    <string name="perm_files_desc">从桌面浏览手机相册和文件</string>
+    <string name="perm_battery">电池</string>
+    <string name="perm_battery_desc">防止 Android 限制连接</string>
+    <string name="perm_autostart">自动启动</string>
+    <string name="perm_autostart_desc">手机重启后自动启动</string>
+
+    <!-- Find My Phone -->
+    <string name="findphone_ringing">您的手机正在响铃</string>
+    <string name="findphone_tap_to_stop">点击任意位置停止</string>
+
+    <!-- Notifications (ConnectionService) -->
+    <string name="notification_searching">正在搜索桌面…</string>
+    <string name="notification_connected_to">已连接到 %1$s</string>
+    <string name="notification_connected_multiple">已连接到 %1$d 台桌面</string>
+    <string name="notification_channel_connection">连接状态</string>
+    <string name="notification_channel_connection_desc">显示 FossLink 连接状态</string>
+    <string name="notification_channel_url">URL 分享</string>
+    <string name="notification_channel_url_desc">从桌面接收的链接</string>
+</resources>

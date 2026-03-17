@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FossLink</string>
+
+    <!-- Home screen -->
+    <string name="home_subtitle">Отправляйте и получайте текстовые сообщения с компьютера</string>
+    <string name="home_connection_status">Состояние подключения</string>
+    <string name="home_connected">Подключено</string>
+    <string name="home_wants_to_pair">Запрос на сопряжение</string>
+    <string name="home_verify_code_desktop">Убедитесь, что этот код совпадает на компьютере:</string>
+    <string name="home_confirm_pairing">Подтвердить сопряжение</string>
+    <string name="home_status">Состояние</string>
+    <string name="home_connecting">Подключение…</string>
+    <string name="home_pairing">Сопряжение…</string>
+    <string name="home_not_connected">Не подключено</string>
+    <string name="home_ensure_running">Убедитесь, что FossLink запущен на вашем компьютере</string>
+    <string name="home_permissions">Разрешения</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">Настройки</string>
+    <string name="settings_paired_desktops">Сопряжённые компьютеры</string>
+    <string name="settings_no_paired">Нет сопряжённых компьютеров</string>
+    <string name="settings_connected">Подключено</string>
+    <string name="settings_offline">Не в сети</string>
+    <string name="settings_disconnect">Отключить</string>
+    <string name="settings_forget">Забыть</string>
+    <string name="settings_reset_setup">Сбросить настройку</string>
+    <string name="settings_advanced">Дополнительно</string>
+    <string name="settings_root_integration">Root-интеграция</string>
+    <string name="settings_root_description">Включить привилегированные операции (прямое открытие URL-адресов, синхронизация статуса прочтения)</string>
+    <string name="settings_forget_desktop_title">Забыть компьютер</string>
+    <string name="settings_forget_desktop_message">Это отключит и отменит сопряжение с этим компьютером. Потребуется повторное сопряжение.</string>
+    <string name="settings_cancel">Отмена</string>
+    <string name="settings_reset_title">Сбросить настройку</string>
+    <string name="settings_reset_message">Это отключит и забудет все компьютеры. Потребуется повторное сопряжение.</string>
+    <string name="settings_reset">Сбросить</string>
+    <string name="settings_battery">Батарея</string>
+    <string name="settings_battery_optimization_enabled">Оптимизация батареи включена</string>
+    <string name="settings_battery_optimization_hint">Это может помешать FossLink оставаться подключённым. Нажмите, чтобы отключить оптимизацию батареи для этого приложения.</string>
+
+    <!-- About screen -->
+    <string name="about_version">Версия %1$s</string>
+    <string name="about_license">Лицензия</string>
+    <string name="about_mit_license">Лицензия MIT</string>
+    <string name="about_source_code">Исходный код</string>
+    <string name="about_report_bug">Сообщить об ошибке</string>
+    <string name="about_help_improve">Помогите улучшить FossLink</string>
+    <string name="about_credits">Авторы</string>
+    <string name="about_developed_by">Разработано Брайаном Хэнсоном</string>
+
+    <!-- Wizard: Welcome -->
+    <string name="welcome_title">Добро пожаловать в FossLink</string>
+    <string name="welcome_description">Отправляйте и получайте текстовые сообщения с компьютера. Настройка займёт всего несколько шагов.</string>
+    <string name="welcome_get_started">Начать</string>
+    <string name="step_welcome">Добро пожаловать</string>
+    <string name="step_permissions">Разрешения</string>
+    <string name="step_find_device">Поиск устройства</string>
+    <string name="step_pair">Сопряжение</string>
+    <string name="step_done">Готово</string>
+
+    <!-- Wizard: Permissions -->
+    <string name="permissions_title">Разрешения</string>
+    <string name="permissions_description">FossLink необходимы эти разрешения для корректной работы. Вы можете предоставить их сейчас или позже.</string>
+    <string name="permissions_granted">Предоставлено</string>
+    <string name="permissions_grant">Предоставить</string>
+    <string name="permissions_continue">Продолжить</string>
+    <string name="permissions_skip">Пропустить</string>
+
+    <!-- Wizard: Discovery -->
+    <string name="discovery_title">Найдите свой компьютер</string>
+    <string name="discovery_already_connected">Уже подключено!</string>
+    <string name="discovery_desktop_fallback">Компьютер</string>
+    <string name="discovery_continue">Продолжить</string>
+    <string name="discovery_same_wifi">Убедитесь, что FossLink запущен на компьютере и оба устройства находятся в одной сети Wi-Fi.</string>
+    <string name="discovery_searching">Поиск устройств…</string>
+    <string name="discovery_may_take_moment">Это может занять несколько секунд</string>
+    <string name="discovery_tap_to_connect">Нажмите для подключения</string>
+
+    <!-- Wizard: Pairing -->
+    <string name="pairing_title">Сопряжение</string>
+    <string name="pairing_verify_code">Убедитесь, что этот код совпадает на вашем компьютере</string>
+    <string name="pairing_confirm_both">Подтвердите на обоих устройствах для завершения сопряжения</string>
+    <string name="pairing_confirm">Подтвердить</string>
+    <string name="pairing_cancel">Отмена</string>
+    <string name="pairing_connecting_to">Подключение к %1$s…</string>
+    <string name="pairing_waiting">Ожидание подключения…</string>
+
+    <!-- Wizard: Success -->
+    <string name="success_title">Всё готово!</string>
+    <string name="success_message">Успешное сопряжение с %1$s. Теперь вы можете отправлять и получать сообщения с компьютера.</string>
+    <string name="success_done">Готово</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_home">Главная</string>
+    <string name="nav_settings">Настройки</string>
+    <string name="nav_about">О приложении</string>
+
+    <!-- Permission names and descriptions (MainViewModel) -->
+    <string name="perm_sms">SMS</string>
+    <string name="perm_sms_desc">Чтение и отправка текстовых сообщений</string>
+    <string name="perm_contacts">Контакты</string>
+    <string name="perm_contacts_desc">Отображение имён контактов в разговорах</string>
+    <string name="perm_phone">Телефон</string>
+    <string name="perm_phone_desc">Обнаружение входящих вызовов</string>
+    <string name="perm_notifications">Уведомления</string>
+    <string name="perm_notifications_desc">Отображение уведомлений о подключении и сопряжении</string>
+    <string name="perm_files_access">Доступ к файлам</string>
+    <string name="perm_files_desc">Просмотр галереи и файлов телефона с компьютера</string>
+    <string name="perm_battery">Батарея</string>
+    <string name="perm_battery_desc">Предотвращение ограничения подключений Android</string>
+    <string name="perm_autostart">Автозапуск</string>
+    <string name="perm_autostart_desc">Автоматический запуск после перезагрузки телефона</string>
+
+    <!-- Find My Phone -->
+    <string name="findphone_ringing">Ваш телефон звонит</string>
+    <string name="findphone_tap_to_stop">Нажмите в любом месте, чтобы остановить</string>
+
+    <!-- Notifications (ConnectionService) -->
+    <string name="notification_searching">Поиск компьютера…</string>
+    <string name="notification_connected_to">Подключено к %1$s</string>
+    <string name="notification_connected_multiple">Подключено к %1$d компьютерам</string>
+    <string name="notification_channel_connection">Состояние подключения</string>
+    <string name="notification_channel_connection_desc">Отображает состояние подключения FossLink</string>
+    <string name="notification_channel_url">Обмен URL-адресами</string>
+    <string name="notification_channel_url_desc">URL-адреса, полученные с компьютера</string>
+</resources>

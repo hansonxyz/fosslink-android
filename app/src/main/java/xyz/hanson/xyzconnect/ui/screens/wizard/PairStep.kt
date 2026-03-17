@@ -23,9 +23,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import xyz.hanson.fosslink.R
 import xyz.hanson.fosslink.ui.viewmodel.AppConnectionState
 
 @Composable
@@ -50,7 +52,7 @@ fun PairStep(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Pairing",
+            text = stringResource(R.string.pairing_title),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold
         )
@@ -64,7 +66,7 @@ fun PairStep(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "Verify this code matches on your computer",
+                    text = stringResource(R.string.pairing_verify_code),
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.height(12.dp))
@@ -76,7 +78,7 @@ fun PairStep(
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "Confirm on both devices to complete pairing",
+                    text = stringResource(R.string.pairing_confirm_both),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center
@@ -88,18 +90,18 @@ fun PairStep(
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50))
                     ) {
                         Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(18.dp))
-                        Text(" Confirm")
+                        Text(" " + stringResource(R.string.pairing_confirm))
                     }
                     OutlinedButton(onClick = onCancel) {
                         Icon(Icons.Filled.Close, contentDescription = null, modifier = Modifier.size(18.dp))
-                        Text(" Cancel")
+                        Text(" " + stringResource(R.string.pairing_cancel))
                     }
                 }
             }
 
             is AppConnectionState.Connecting -> {
                 Text(
-                    text = "Connecting to ${appState.desktopName}...",
+                    text = stringResource(R.string.pairing_connecting_to, appState.desktopName),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -113,7 +115,7 @@ fun PairStep(
 
             else -> {
                 Text(
-                    text = "Waiting for connection...",
+                    text = stringResource(R.string.pairing_waiting),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

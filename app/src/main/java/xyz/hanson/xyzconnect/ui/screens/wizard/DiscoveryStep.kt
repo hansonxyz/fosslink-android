@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -46,7 +47,7 @@ fun DiscoveryStep(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Find Your Computer",
+            text = stringResource(R.string.discovery_title),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold
         )
@@ -56,7 +57,7 @@ fun DiscoveryStep(
             is AppConnectionState.Connected -> {
                 // Already connected
                 Text(
-                    text = "Already connected!",
+                    text = stringResource(R.string.discovery_already_connected),
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -83,12 +84,12 @@ fun DiscoveryStep(
                         Spacer(modifier = Modifier.width(16.dp))
                         Column {
                             Text(
-                                text = appState.desktops.firstOrNull()?.name ?: "Desktop",
+                                text = appState.desktops.firstOrNull()?.name ?: stringResource(R.string.discovery_desktop_fallback),
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Medium
                             )
                             Text(
-                                text = "Connected",
+                                text = stringResource(R.string.home_connected),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = Color(0xFF4CAF50)
                             )
@@ -100,13 +101,13 @@ fun DiscoveryStep(
                     onClick = onAlreadyConnected,
                     modifier = Modifier.fillMaxWidth(0.6f)
                 ) {
-                    Text("Continue")
+                    Text(stringResource(R.string.discovery_continue))
                 }
             }
 
             is AppConnectionState.Discovering -> {
                 Text(
-                    text = "Make sure FossLink is running on your computer and both devices are on the same Wi-Fi network.",
+                    text = stringResource(R.string.discovery_same_wifi),
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -118,13 +119,13 @@ fun DiscoveryStep(
                     CircularProgressIndicator(modifier = Modifier.size(48.dp))
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = "Searching for devices...",
+                        text = stringResource(R.string.discovery_searching),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "This may take a few moments",
+                        text = stringResource(R.string.discovery_may_take_moment),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -159,7 +160,7 @@ fun DiscoveryStep(
                                         fontWeight = FontWeight.Medium
                                     )
                                     Text(
-                                        text = "Tap to connect",
+                                        text = stringResource(R.string.discovery_tap_to_connect),
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
@@ -173,7 +174,7 @@ fun DiscoveryStep(
             else -> {
                 // Disconnected, Connecting, or PairingRequested — show searching
                 Text(
-                    text = "Make sure FossLink is running on your computer and both devices are on the same Wi-Fi network.",
+                    text = stringResource(R.string.discovery_same_wifi),
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -182,13 +183,13 @@ fun DiscoveryStep(
                 CircularProgressIndicator(modifier = Modifier.size(48.dp))
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "Searching for devices...",
+                    text = stringResource(R.string.discovery_searching),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "This may take a few moments",
+                    text = stringResource(R.string.discovery_may_take_moment),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

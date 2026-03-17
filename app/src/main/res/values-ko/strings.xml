@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FossLink</string>
+
+    <!-- Home screen -->
+    <string name="home_subtitle">컴퓨터에서 문자 메시지를 보내고 받으세요</string>
+    <string name="home_connection_status">연결 상태</string>
+    <string name="home_connected">연결됨</string>
+    <string name="home_wants_to_pair">페어링을 요청합니다</string>
+    <string name="home_verify_code_desktop">이 코드가 데스크톱과 일치하는지 확인하세요:</string>
+    <string name="home_confirm_pairing">페어링 확인</string>
+    <string name="home_status">상태</string>
+    <string name="home_connecting">연결 중…</string>
+    <string name="home_pairing">페어링 중…</string>
+    <string name="home_not_connected">연결되지 않음</string>
+    <string name="home_ensure_running">컴퓨터에서 FossLink이 실행 중인지 확인하세요</string>
+    <string name="home_permissions">권한</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">설정</string>
+    <string name="settings_paired_desktops">페어링된 데스크톱</string>
+    <string name="settings_no_paired">페어링된 데스크톱이 없습니다</string>
+    <string name="settings_connected">연결됨</string>
+    <string name="settings_offline">오프라인</string>
+    <string name="settings_disconnect">연결 해제</string>
+    <string name="settings_forget">삭제</string>
+    <string name="settings_reset_setup">설정 초기화</string>
+    <string name="settings_advanced">고급</string>
+    <string name="settings_root_integration">루트 연동</string>
+    <string name="settings_root_description">권한이 필요한 작업 활성화 (URL 직접 열기, 읽음 상태 동기화)</string>
+    <string name="settings_forget_desktop_title">데스크톱 삭제</string>
+    <string name="settings_forget_desktop_message">이 데스크톱의 연결을 해제하고 페어링을 취소합니다. 다시 페어링해야 합니다.</string>
+    <string name="settings_cancel">취소</string>
+    <string name="settings_reset_title">설정 초기화</string>
+    <string name="settings_reset_message">모든 데스크톱의 연결을 해제하고 삭제합니다. 다시 페어링해야 합니다.</string>
+    <string name="settings_reset">초기화</string>
+    <string name="settings_battery">배터리</string>
+    <string name="settings_battery_optimization_enabled">배터리 최적화가 활성화되어 있습니다</string>
+    <string name="settings_battery_optimization_hint">FossLink의 연결이 유지되지 않을 수 있습니다. 탭하여 이 앱의 배터리 최적화를 비활성화하세요.</string>
+
+    <!-- About screen -->
+    <string name="about_version">버전 %1$s</string>
+    <string name="about_license">라이선스</string>
+    <string name="about_mit_license">MIT 라이선스</string>
+    <string name="about_source_code">소스 코드</string>
+    <string name="about_report_bug">버그 신고</string>
+    <string name="about_help_improve">FossLink 개선에 참여하기</string>
+    <string name="about_credits">크레딧</string>
+    <string name="about_developed_by">개발자: Brian Hanson</string>
+
+    <!-- Wizard: Welcome -->
+    <string name="welcome_title">FossLink에 오신 것을 환영합니다</string>
+    <string name="welcome_description">컴퓨터에서 문자 메시지를 보내고 받으세요. 몇 가지 간단한 단계로 설정해 드리겠습니다.</string>
+    <string name="welcome_get_started">시작하기</string>
+    <string name="step_welcome">환영</string>
+    <string name="step_permissions">권한</string>
+    <string name="step_find_device">기기 찾기</string>
+    <string name="step_pair">페어링</string>
+    <string name="step_done">완료</string>
+
+    <!-- Wizard: Permissions -->
+    <string name="permissions_title">권한</string>
+    <string name="permissions_description">FossLink이 제대로 작동하려면 이 권한들이 필요합니다. 지금 또는 나중에 허용할 수 있습니다.</string>
+    <string name="permissions_granted">허용됨</string>
+    <string name="permissions_grant">허용</string>
+    <string name="permissions_continue">계속</string>
+    <string name="permissions_skip">나중에 하기</string>
+
+    <!-- Wizard: Discovery -->
+    <string name="discovery_title">컴퓨터 찾기</string>
+    <string name="discovery_already_connected">이미 연결되었습니다!</string>
+    <string name="discovery_desktop_fallback">데스크톱</string>
+    <string name="discovery_continue">계속</string>
+    <string name="discovery_same_wifi">컴퓨터에서 FossLink이 실행 중이고 두 기기가 같은 Wi-Fi 네트워크에 연결되어 있는지 확인하세요.</string>
+    <string name="discovery_searching">기기를 검색하는 중…</string>
+    <string name="discovery_may_take_moment">잠시 기다려 주세요</string>
+    <string name="discovery_tap_to_connect">탭하여 연결</string>
+
+    <!-- Wizard: Pairing -->
+    <string name="pairing_title">페어링</string>
+    <string name="pairing_verify_code">이 코드가 컴퓨터와 일치하는지 확인하세요</string>
+    <string name="pairing_confirm_both">양쪽 기기에서 확인하여 페어링을 완료하세요</string>
+    <string name="pairing_confirm">확인</string>
+    <string name="pairing_cancel">취소</string>
+    <string name="pairing_connecting_to">%1$s에 연결 중…</string>
+    <string name="pairing_waiting">연결을 기다리는 중…</string>
+
+    <!-- Wizard: Success -->
+    <string name="success_title">설정 완료!</string>
+    <string name="success_message">%1$s와(과) 성공적으로 페어링되었습니다. 이제 컴퓨터에서 메시지를 보내고 받을 수 있습니다.</string>
+    <string name="success_done">완료</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_home">홈</string>
+    <string name="nav_settings">설정</string>
+    <string name="nav_about">정보</string>
+
+    <!-- Permission names and descriptions (MainViewModel) -->
+    <string name="perm_sms">SMS</string>
+    <string name="perm_sms_desc">문자 메시지 읽기 및 보내기</string>
+    <string name="perm_contacts">연락처</string>
+    <string name="perm_contacts_desc">대화에 연락처 이름 표시</string>
+    <string name="perm_phone">전화</string>
+    <string name="perm_phone_desc">수신 전화 감지</string>
+    <string name="perm_notifications">알림</string>
+    <string name="perm_notifications_desc">연결 및 페어링 알림 표시</string>
+    <string name="perm_files_access">파일 접근</string>
+    <string name="perm_files_desc">데스크톱에서 휴대폰 갤러리 및 파일 탐색</string>
+    <string name="perm_battery">배터리</string>
+    <string name="perm_battery_desc">Android가 연결을 제한하지 않도록 방지</string>
+    <string name="perm_autostart">자동 시작</string>
+    <string name="perm_autostart_desc">휴대폰 재부팅 후 자동으로 시작</string>
+
+    <!-- Find My Phone -->
+    <string name="findphone_ringing">휴대폰이 울리고 있습니다</string>
+    <string name="findphone_tap_to_stop">아무 곳이나 탭하여 중지</string>
+
+    <!-- Notifications (ConnectionService) -->
+    <string name="notification_searching">데스크톱을 검색하는 중…</string>
+    <string name="notification_connected_to">%1$s에 연결됨</string>
+    <string name="notification_connected_multiple">%1$d개의 데스크톱에 연결됨</string>
+    <string name="notification_channel_connection">연결 상태</string>
+    <string name="notification_channel_connection_desc">FossLink 연결 상태를 표시합니다</string>
+    <string name="notification_channel_url">URL 공유</string>
+    <string name="notification_channel_url_desc">데스크톱에서 수신된 URL</string>
+</resources>

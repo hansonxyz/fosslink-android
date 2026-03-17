@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FossLink</string>
+
+    <!-- Home screen -->
+    <string name="home_subtitle">Verstuur en ontvang sms-berichten vanaf je computer</string>
+    <string name="home_connection_status">Verbindingsstatus</string>
+    <string name="home_connected">Verbonden</string>
+    <string name="home_wants_to_pair">Wil koppelen</string>
+    <string name="home_verify_code_desktop">Controleer of deze code overeenkomt op het bureaublad:</string>
+    <string name="home_confirm_pairing">Koppeling bevestigen</string>
+    <string name="home_status">Status</string>
+    <string name="home_connecting">Verbinden…</string>
+    <string name="home_pairing">Koppelen…</string>
+    <string name="home_not_connected">Niet verbonden</string>
+    <string name="home_ensure_running">Zorg ervoor dat FossLink op je computer draait</string>
+    <string name="home_permissions">Machtigingen</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">Instellingen</string>
+    <string name="settings_paired_desktops">Gekoppelde Computers</string>
+    <string name="settings_no_paired">Geen gekoppelde computers</string>
+    <string name="settings_connected">Verbonden</string>
+    <string name="settings_offline">Offline</string>
+    <string name="settings_disconnect">Verbreken</string>
+    <string name="settings_forget">Vergeten</string>
+    <string name="settings_reset_setup">Instelling resetten</string>
+    <string name="settings_advanced">Geavanceerd</string>
+    <string name="settings_root_integration">Root-integratie</string>
+    <string name="settings_root_description">Bevoorrechte bewerkingen inschakelen (URL\'s direct openen, leesstatus synchroniseren)</string>
+    <string name="settings_forget_desktop_title">Computer vergeten</string>
+    <string name="settings_forget_desktop_message">Dit verbreekt de verbinding en ontkoppelt deze computer. Je moet opnieuw koppelen.</string>
+    <string name="settings_cancel">Annuleren</string>
+    <string name="settings_reset_title">Instelling resetten</string>
+    <string name="settings_reset_message">Dit verbreekt de verbinding en vergeet alle computers. Je moet opnieuw koppelen.</string>
+    <string name="settings_reset">Resetten</string>
+    <string name="settings_battery">Batterij</string>
+    <string name="settings_battery_optimization_enabled">Batterijoptimalisatie is ingeschakeld</string>
+    <string name="settings_battery_optimization_hint">Dit kan voorkomen dat FossLink verbonden blijft. Tik om batterijoptimalisatie voor deze app uit te schakelen.</string>
+
+    <!-- About screen -->
+    <string name="about_version">Versie %1$s</string>
+    <string name="about_license">Licentie</string>
+    <string name="about_mit_license">MIT-licentie</string>
+    <string name="about_source_code">Broncode</string>
+    <string name="about_report_bug">Een bug melden</string>
+    <string name="about_help_improve">Help FossLink te verbeteren</string>
+    <string name="about_credits">Credits</string>
+    <string name="about_developed_by">Ontwikkeld door Brian Hanson</string>
+
+    <!-- Wizard: Welcome -->
+    <string name="welcome_title">Welkom bij FossLink</string>
+    <string name="welcome_description">Verstuur en ontvang sms-berichten vanaf je computer. We helpen je in een paar snelle stappen op weg.</string>
+    <string name="welcome_get_started">Aan de slag</string>
+    <string name="step_welcome">Welkom</string>
+    <string name="step_permissions">Machtigingen</string>
+    <string name="step_find_device">Apparaat zoeken</string>
+    <string name="step_pair">Koppelen</string>
+    <string name="step_done">Gereed</string>
+
+    <!-- Wizard: Permissions -->
+    <string name="permissions_title">Machtigingen</string>
+    <string name="permissions_description">FossLink heeft deze machtigingen nodig om goed te werken. Je kunt ze nu of later verlenen.</string>
+    <string name="permissions_granted">Verleend</string>
+    <string name="permissions_grant">Verlenen</string>
+    <string name="permissions_continue">Doorgaan</string>
+    <string name="permissions_skip">Voorlopig overslaan</string>
+
+    <!-- Wizard: Discovery -->
+    <string name="discovery_title">Zoek je computer</string>
+    <string name="discovery_already_connected">Al verbonden!</string>
+    <string name="discovery_desktop_fallback">Computer</string>
+    <string name="discovery_continue">Doorgaan</string>
+    <string name="discovery_same_wifi">Zorg ervoor dat FossLink op je computer draait en dat beide apparaten op hetzelfde Wi-Fi-netwerk zitten.</string>
+    <string name="discovery_searching">Zoeken naar apparaten…</string>
+    <string name="discovery_may_take_moment">Dit kan even duren</string>
+    <string name="discovery_tap_to_connect">Tik om te verbinden</string>
+
+    <!-- Wizard: Pairing -->
+    <string name="pairing_title">Koppelen</string>
+    <string name="pairing_verify_code">Controleer of deze code overeenkomt op je computer</string>
+    <string name="pairing_confirm_both">Bevestig op beide apparaten om het koppelen te voltooien</string>
+    <string name="pairing_confirm">Bevestigen</string>
+    <string name="pairing_cancel">Annuleren</string>
+    <string name="pairing_connecting_to">Verbinden met %1$s…</string>
+    <string name="pairing_waiting">Wachten op verbinding…</string>
+
+    <!-- Wizard: Success -->
+    <string name="success_title">Alles is klaar!</string>
+    <string name="success_message">Succesvol gekoppeld met %1$s. Je kunt nu berichten versturen en ontvangen vanaf je computer.</string>
+    <string name="success_done">Gereed</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_home">Start</string>
+    <string name="nav_settings">Instellingen</string>
+    <string name="nav_about">Over</string>
+
+    <!-- Permission names and descriptions (MainViewModel) -->
+    <string name="perm_sms">SMS</string>
+    <string name="perm_sms_desc">Sms-berichten lezen en versturen</string>
+    <string name="perm_contacts">Contacten</string>
+    <string name="perm_contacts_desc">Contactnamen in gesprekken tonen</string>
+    <string name="perm_phone">Telefoon</string>
+    <string name="perm_phone_desc">Inkomende oproepen detecteren</string>
+    <string name="perm_notifications">Meldingen</string>
+    <string name="perm_notifications_desc">Verbindings- en koppelingsmeldingen tonen</string>
+    <string name="perm_files_access">Bestandstoegang</string>
+    <string name="perm_files_desc">Telefoon galerij en bestanden bekijken vanaf de computer</string>
+    <string name="perm_battery">Batterij</string>
+    <string name="perm_battery_desc">Voorkom dat Android verbindingen beperkt</string>
+    <string name="perm_autostart">Automatisch starten</string>
+    <string name="perm_autostart_desc">Automatisch starten na het herstarten van de telefoon</string>
+
+    <!-- Find My Phone -->
+    <string name="findphone_ringing">Je telefoon gaat over</string>
+    <string name="findphone_tap_to_stop">Tik ergens om te stoppen</string>
+
+    <!-- Notifications (ConnectionService) -->
+    <string name="notification_searching">Zoeken naar computer…</string>
+    <string name="notification_connected_to">Verbonden met %1$s</string>
+    <string name="notification_connected_multiple">Verbonden met %1$d computers</string>
+    <string name="notification_channel_connection">Verbindingsstatus</string>
+    <string name="notification_channel_connection_desc">Toont de verbindingsstatus van FossLink</string>
+    <string name="notification_channel_url">URL-deling</string>
+    <string name="notification_channel_url_desc">URL\'s ontvangen van de computer</string>
+</resources>

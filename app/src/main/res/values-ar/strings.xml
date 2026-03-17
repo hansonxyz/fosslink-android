@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FossLink</string>
+
+    <!-- Home screen -->
+    <string name="home_subtitle">أرسل واستقبل الرسائل النصية من جهاز الكمبيوتر</string>
+    <string name="home_connection_status">حالة الاتصال</string>
+    <string name="home_connected">متصل</string>
+    <string name="home_wants_to_pair">يريد الاقتران</string>
+    <string name="home_verify_code_desktop">تحقق من تطابق هذا الرمز على سطح المكتب:</string>
+    <string name="home_confirm_pairing">تأكيد الاقتران</string>
+    <string name="home_status">الحالة</string>
+    <string name="home_connecting">جارٍ الاتصال…</string>
+    <string name="home_pairing">جارٍ الاقتران…</string>
+    <string name="home_not_connected">غير متصل</string>
+    <string name="home_ensure_running">تأكد من أن FossLink يعمل على جهاز الكمبيوتر</string>
+    <string name="home_permissions">الأذونات</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">الإعدادات</string>
+    <string name="settings_paired_desktops">أجهزة سطح المكتب المقترنة</string>
+    <string name="settings_no_paired">لا توجد أجهزة سطح مكتب مقترنة</string>
+    <string name="settings_connected">متصل</string>
+    <string name="settings_offline">غير متصل</string>
+    <string name="settings_disconnect">قطع الاتصال</string>
+    <string name="settings_forget">نسيان</string>
+    <string name="settings_reset_setup">إعادة ضبط الإعداد</string>
+    <string name="settings_advanced">متقدم</string>
+    <string name="settings_root_integration">تكامل الروت</string>
+    <string name="settings_root_description">تمكين العمليات المميزة (فتح الروابط مباشرة، مزامنة حالة القراءة)</string>
+    <string name="settings_forget_desktop_title">نسيان سطح المكتب</string>
+    <string name="settings_forget_desktop_message">سيؤدي هذا إلى قطع الاتصال وإلغاء اقتران سطح المكتب. ستحتاج إلى الاقتران مرة أخرى.</string>
+    <string name="settings_cancel">إلغاء</string>
+    <string name="settings_reset_title">إعادة ضبط الإعداد</string>
+    <string name="settings_reset_message">سيؤدي هذا إلى قطع الاتصال ونسيان جميع أجهزة سطح المكتب. ستحتاج إلى الاقتران مرة أخرى.</string>
+    <string name="settings_reset">إعادة ضبط</string>
+    <string name="settings_battery">البطارية</string>
+    <string name="settings_battery_optimization_enabled">تحسين البطارية مُفعّل</string>
+    <string name="settings_battery_optimization_hint">قد يمنع هذا FossLink من البقاء متصلاً. انقر لتعطيل تحسين البطارية لهذا التطبيق.</string>
+
+    <!-- About screen -->
+    <string name="about_version">الإصدار %1$s</string>
+    <string name="about_license">الترخيص</string>
+    <string name="about_mit_license">رخصة MIT</string>
+    <string name="about_source_code">الشيفرة المصدرية</string>
+    <string name="about_report_bug">الإبلاغ عن خطأ</string>
+    <string name="about_help_improve">ساعد في تحسين FossLink</string>
+    <string name="about_credits">الاعتمادات</string>
+    <string name="about_developed_by">تطوير بواسطة Brian Hanson</string>
+
+    <!-- Wizard: Welcome -->
+    <string name="welcome_title">مرحبًا بك في FossLink</string>
+    <string name="welcome_description">أرسل واستقبل الرسائل النصية من جهاز الكمبيوتر. سنساعدك على الإعداد في خطوات سريعة.</string>
+    <string name="welcome_get_started">ابدأ الآن</string>
+    <string name="step_welcome">مرحبًا</string>
+    <string name="step_permissions">الأذونات</string>
+    <string name="step_find_device">البحث عن جهاز</string>
+    <string name="step_pair">الاقتران</string>
+    <string name="step_done">تم</string>
+
+    <!-- Wizard: Permissions -->
+    <string name="permissions_title">الأذونات</string>
+    <string name="permissions_description">يحتاج FossLink إلى هذه الأذونات ليعمل بشكل صحيح. يمكنك منحها الآن أو لاحقًا.</string>
+    <string name="permissions_granted">تم المنح</string>
+    <string name="permissions_grant">منح</string>
+    <string name="permissions_continue">متابعة</string>
+    <string name="permissions_skip">تخطي الآن</string>
+
+    <!-- Wizard: Discovery -->
+    <string name="discovery_title">ابحث عن جهاز الكمبيوتر</string>
+    <string name="discovery_already_connected">متصل بالفعل!</string>
+    <string name="discovery_desktop_fallback">سطح المكتب</string>
+    <string name="discovery_continue">متابعة</string>
+    <string name="discovery_same_wifi">تأكد من أن FossLink يعمل على جهاز الكمبيوتر وأن كلا الجهازين على نفس شبكة Wi-Fi.</string>
+    <string name="discovery_searching">جارٍ البحث عن الأجهزة…</string>
+    <string name="discovery_may_take_moment">قد يستغرق هذا بضع لحظات</string>
+    <string name="discovery_tap_to_connect">انقر للاتصال</string>
+
+    <!-- Wizard: Pairing -->
+    <string name="pairing_title">الاقتران</string>
+    <string name="pairing_verify_code">تحقق من تطابق هذا الرمز على جهاز الكمبيوتر</string>
+    <string name="pairing_confirm_both">قم بالتأكيد على كلا الجهازين لإتمام الاقتران</string>
+    <string name="pairing_confirm">تأكيد</string>
+    <string name="pairing_cancel">إلغاء</string>
+    <string name="pairing_connecting_to">جارٍ الاتصال بـ %1$s…</string>
+    <string name="pairing_waiting">في انتظار الاتصال…</string>
+
+    <!-- Wizard: Success -->
+    <string name="success_title">كل شيء جاهز!</string>
+    <string name="success_message">تم الاقتران بنجاح مع %1$s. يمكنك الآن إرسال واستقبال الرسائل من جهاز الكمبيوتر.</string>
+    <string name="success_done">تم</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_home">الرئيسية</string>
+    <string name="nav_settings">الإعدادات</string>
+    <string name="nav_about">حول</string>
+
+    <!-- Permission names and descriptions (MainViewModel) -->
+    <string name="perm_sms">الرسائل القصيرة</string>
+    <string name="perm_sms_desc">قراءة وإرسال الرسائل النصية</string>
+    <string name="perm_contacts">جهات الاتصال</string>
+    <string name="perm_contacts_desc">عرض أسماء جهات الاتصال في المحادثات</string>
+    <string name="perm_phone">الهاتف</string>
+    <string name="perm_phone_desc">اكتشاف المكالمات الواردة</string>
+    <string name="perm_notifications">الإشعارات</string>
+    <string name="perm_notifications_desc">عرض إشعارات الاتصال والاقتران</string>
+    <string name="perm_files_access">الوصول إلى الملفات</string>
+    <string name="perm_files_desc">تصفح معرض الهاتف والملفات من سطح المكتب</string>
+    <string name="perm_battery">البطارية</string>
+    <string name="perm_battery_desc">منع أندرويد من تقييد الاتصالات</string>
+    <string name="perm_autostart">التشغيل التلقائي</string>
+    <string name="perm_autostart_desc">البدء تلقائيًا بعد إعادة تشغيل الهاتف</string>
+
+    <!-- Find My Phone -->
+    <string name="findphone_ringing">هاتفك يرن</string>
+    <string name="findphone_tap_to_stop">انقر في أي مكان للإيقاف</string>
+
+    <!-- Notifications (ConnectionService) -->
+    <string name="notification_searching">جارٍ البحث عن سطح المكتب…</string>
+    <string name="notification_connected_to">متصل بـ %1$s</string>
+    <string name="notification_connected_multiple">متصل بـ %1$d أجهزة سطح مكتب</string>
+    <string name="notification_channel_connection">حالة الاتصال</string>
+    <string name="notification_channel_connection_desc">يعرض حالة اتصال FossLink</string>
+    <string name="notification_channel_url">مشاركة الروابط</string>
+    <string name="notification_channel_url_desc">الروابط المستلمة من سطح المكتب</string>
+</resources>

@@ -174,7 +174,7 @@ class ConnectionService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val notification = buildNotification("Searching for desktop...")
+        val notification = buildNotification(getString(R.string.notification_searching))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             startForeground(NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE)
         } else {
@@ -521,9 +521,9 @@ class ConnectionService : Service() {
     private fun updateNotificationText() {
         val connected = _desktopConnections.value.values.filter { it.state == ConnectionState.CONNECTED }
         val text = when {
-            connected.isEmpty() -> "Searching for desktop..."
-            connected.size == 1 -> "Connected to ${connected.first().deviceName}"
-            else -> "Connected to ${connected.size} desktops"
+            connected.isEmpty() -> getString(R.string.notification_searching)
+            connected.size == 1 -> getString(R.string.notification_connected_to, connected.first().deviceName)
+            else -> getString(R.string.notification_connected_multiple, connected.size)
         }
         updateNotification(text)
     }
@@ -538,7 +538,7 @@ class ConnectionService : Service() {
         val pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("FossLink")
+            .setContentTitle(getString(R.string.app_name))
             .setContentText(text)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentIntent(pi)
@@ -551,19 +551,19 @@ class ConnectionService : Service() {
 
         val connectionChannel = NotificationChannel(
             CHANNEL_ID,
-            "Connection Status",
+            getString(R.string.notification_channel_connection),
             NotificationManager.IMPORTANCE_LOW
         ).apply {
-            description = "Shows FossLink connection status"
+            description = getString(R.string.notification_channel_connection_desc)
         }
         nm.createNotificationChannel(connectionChannel)
 
         val urlChannel = NotificationChannel(
             URL_CHANNEL_ID,
-            "URL Sharing",
+            getString(R.string.notification_channel_url),
             NotificationManager.IMPORTANCE_HIGH
         ).apply {
-            description = "URLs received from desktop"
+            description = getString(R.string.notification_channel_url_desc)
         }
         nm.createNotificationChannel(urlChannel)
     }

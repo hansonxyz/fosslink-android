@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FossLink</string>
+
+    <!-- Home screen -->
+    <string name="home_subtitle">パソコンからテキストメッセージを送受信</string>
+    <string name="home_connection_status">接続状態</string>
+    <string name="home_connected">接続済み</string>
+    <string name="home_wants_to_pair">ペアリングを要求しています</string>
+    <string name="home_verify_code_desktop">このコードがデスクトップと一致することを確認してください：</string>
+    <string name="home_confirm_pairing">ペアリングを確認</string>
+    <string name="home_status">状態</string>
+    <string name="home_connecting">接続中…</string>
+    <string name="home_pairing">ペアリング中…</string>
+    <string name="home_not_connected">未接続</string>
+    <string name="home_ensure_running">パソコンでFossLinkが実行されていることを確認してください</string>
+    <string name="home_permissions">権限</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">設定</string>
+    <string name="settings_paired_desktops">ペアリング済みのデスクトップ</string>
+    <string name="settings_no_paired">ペアリング済みのデスクトップはありません</string>
+    <string name="settings_connected">接続済み</string>
+    <string name="settings_offline">オフライン</string>
+    <string name="settings_disconnect">切断</string>
+    <string name="settings_forget">削除</string>
+    <string name="settings_reset_setup">セットアップをリセット</string>
+    <string name="settings_advanced">詳細設定</string>
+    <string name="settings_root_integration">Root連携</string>
+    <string name="settings_root_description">特権操作を有効にする（URLを直接開く、既読状態を同期）</string>
+    <string name="settings_forget_desktop_title">デスクトップを削除</string>
+    <string name="settings_forget_desktop_message">このデスクトップとの接続を切断し、ペアリングを解除します。再度ペアリングが必要になります。</string>
+    <string name="settings_cancel">キャンセル</string>
+    <string name="settings_reset_title">セットアップをリセット</string>
+    <string name="settings_reset_message">すべてのデスクトップとの接続を切断し、削除します。再度ペアリングが必要になります。</string>
+    <string name="settings_reset">リセット</string>
+    <string name="settings_battery">バッテリー</string>
+    <string name="settings_battery_optimization_enabled">バッテリー最適化が有効です</string>
+    <string name="settings_battery_optimization_hint">FossLinkの接続が維持されない可能性があります。タップしてこのアプリのバッテリー最適化を無効にしてください。</string>
+
+    <!-- About screen -->
+    <string name="about_version">バージョン %1$s</string>
+    <string name="about_license">ライセンス</string>
+    <string name="about_mit_license">MITライセンス</string>
+    <string name="about_source_code">ソースコード</string>
+    <string name="about_report_bug">バグを報告</string>
+    <string name="about_help_improve">FossLinkの改善に協力する</string>
+    <string name="about_credits">クレジット</string>
+    <string name="about_developed_by">開発者: Brian Hanson</string>
+
+    <!-- Wizard: Welcome -->
+    <string name="welcome_title">FossLinkへようこそ</string>
+    <string name="welcome_description">パソコンからテキストメッセージを送受信できます。いくつかの簡単なステップでセットアップしましょう。</string>
+    <string name="welcome_get_started">はじめる</string>
+    <string name="step_welcome">ようこそ</string>
+    <string name="step_permissions">権限</string>
+    <string name="step_find_device">デバイスを検索</string>
+    <string name="step_pair">ペアリング</string>
+    <string name="step_done">完了</string>
+
+    <!-- Wizard: Permissions -->
+    <string name="permissions_title">権限</string>
+    <string name="permissions_description">FossLinkが正しく動作するためにこれらの権限が必要です。今すぐまたは後で許可できます。</string>
+    <string name="permissions_granted">許可済み</string>
+    <string name="permissions_grant">許可</string>
+    <string name="permissions_continue">続ける</string>
+    <string name="permissions_skip">後で設定する</string>
+
+    <!-- Wizard: Discovery -->
+    <string name="discovery_title">パソコンを検索</string>
+    <string name="discovery_already_connected">接続済みです！</string>
+    <string name="discovery_desktop_fallback">デスクトップ</string>
+    <string name="discovery_continue">続ける</string>
+    <string name="discovery_same_wifi">パソコンでFossLinkが実行されていること、両方のデバイスが同じWi-Fiネットワークに接続されていることを確認してください。</string>
+    <string name="discovery_searching">デバイスを検索中…</string>
+    <string name="discovery_may_take_moment">しばらくお待ちください</string>
+    <string name="discovery_tap_to_connect">タップして接続</string>
+
+    <!-- Wizard: Pairing -->
+    <string name="pairing_title">ペアリング</string>
+    <string name="pairing_verify_code">このコードがパソコンと一致することを確認してください</string>
+    <string name="pairing_confirm_both">両方のデバイスで確認してペアリングを完了してください</string>
+    <string name="pairing_confirm">確認</string>
+    <string name="pairing_cancel">キャンセル</string>
+    <string name="pairing_connecting_to">%1$sに接続中…</string>
+    <string name="pairing_waiting">接続を待っています…</string>
+
+    <!-- Wizard: Success -->
+    <string name="success_title">設定完了！</string>
+    <string name="success_message">%1$sとのペアリングに成功しました。パソコンからメッセージを送受信できます。</string>
+    <string name="success_done">完了</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_home">ホーム</string>
+    <string name="nav_settings">設定</string>
+    <string name="nav_about">アプリについて</string>
+
+    <!-- Permission names and descriptions (MainViewModel) -->
+    <string name="perm_sms">SMS</string>
+    <string name="perm_sms_desc">テキストメッセージの読み取りと送信</string>
+    <string name="perm_contacts">連絡先</string>
+    <string name="perm_contacts_desc">会話に連絡先の名前を表示</string>
+    <string name="perm_phone">電話</string>
+    <string name="perm_phone_desc">着信の検出</string>
+    <string name="perm_notifications">通知</string>
+    <string name="perm_notifications_desc">接続とペアリングの通知を表示</string>
+    <string name="perm_files_access">ファイルアクセス</string>
+    <string name="perm_files_desc">デスクトップからスマホのギャラリーやファイルを閲覧</string>
+    <string name="perm_battery">バッテリー</string>
+    <string name="perm_battery_desc">Androidによる接続の制限を防止</string>
+    <string name="perm_autostart">自動起動</string>
+    <string name="perm_autostart_desc">スマホの再起動後に自動的に起動</string>
+
+    <!-- Find My Phone -->
+    <string name="findphone_ringing">スマホが鳴っています</string>
+    <string name="findphone_tap_to_stop">どこかをタップして停止</string>
+
+    <!-- Notifications (ConnectionService) -->
+    <string name="notification_searching">デスクトップを検索中…</string>
+    <string name="notification_connected_to">%1$sに接続済み</string>
+    <string name="notification_connected_multiple">%1$d台のデスクトップに接続済み</string>
+    <string name="notification_channel_connection">接続状態</string>
+    <string name="notification_channel_connection_desc">FossLinkの接続状態を表示します</string>
+    <string name="notification_channel_url">URL共有</string>
+    <string name="notification_channel_url_desc">デスクトップから受信したURL</string>
+</resources>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FossLink</string>
+
+    <!-- Home screen -->
+    <string name="home_subtitle">Sende und empfange Textnachrichten von deinem Computer</string>
+    <string name="home_connection_status">Verbindungsstatus</string>
+    <string name="home_connected">Verbunden</string>
+    <string name="home_wants_to_pair">Möchte koppeln</string>
+    <string name="home_verify_code_desktop">Überprüfe, ob dieser Code auf dem Desktop übereinstimmt:</string>
+    <string name="home_confirm_pairing">Kopplung bestätigen</string>
+    <string name="home_status">Status</string>
+    <string name="home_connecting">Verbinde…</string>
+    <string name="home_pairing">Koppeln…</string>
+    <string name="home_not_connected">Nicht verbunden</string>
+    <string name="home_ensure_running">Stelle sicher, dass FossLink auf deinem Computer läuft</string>
+    <string name="home_permissions">Berechtigungen</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_paired_desktops">Gekoppelte Desktops</string>
+    <string name="settings_no_paired">Keine gekoppelten Desktops</string>
+    <string name="settings_connected">Verbunden</string>
+    <string name="settings_offline">Offline</string>
+    <string name="settings_disconnect">Trennen</string>
+    <string name="settings_forget">Vergessen</string>
+    <string name="settings_reset_setup">Einrichtung zurücksetzen</string>
+    <string name="settings_advanced">Erweitert</string>
+    <string name="settings_root_integration">Root-Integration</string>
+    <string name="settings_root_description">Privilegierte Operationen aktivieren (URLs direkt öffnen, Lesestatus synchronisieren)</string>
+    <string name="settings_forget_desktop_title">Desktop vergessen</string>
+    <string name="settings_forget_desktop_message">Dies trennt und entkoppelt diesen Desktop. Du musst erneut koppeln.</string>
+    <string name="settings_cancel">Abbrechen</string>
+    <string name="settings_reset_title">Einrichtung zurücksetzen</string>
+    <string name="settings_reset_message">Dies trennt und vergisst alle Desktops. Du musst erneut koppeln.</string>
+    <string name="settings_reset">Zurücksetzen</string>
+    <string name="settings_battery">Akku</string>
+    <string name="settings_battery_optimization_enabled">Akkuoptimierung ist aktiviert</string>
+    <string name="settings_battery_optimization_hint">Dies kann verhindern, dass FossLink verbunden bleibt. Tippe, um die Akkuoptimierung für diese App zu deaktivieren.</string>
+
+    <!-- About screen -->
+    <string name="about_version">Version %1$s</string>
+    <string name="about_license">Lizenz</string>
+    <string name="about_mit_license">MIT-Lizenz</string>
+    <string name="about_source_code">Quellcode</string>
+    <string name="about_report_bug">Fehler melden</string>
+    <string name="about_help_improve">Hilf mit, FossLink zu verbessern</string>
+    <string name="about_credits">Danksagungen</string>
+    <string name="about_developed_by">Entwickelt von Brian Hanson</string>
+
+    <!-- Wizard: Welcome -->
+    <string name="welcome_title">Willkommen bei FossLink</string>
+    <string name="welcome_description">Sende und empfange Textnachrichten von deinem Computer. Wir richten dich in wenigen Schritten ein.</string>
+    <string name="welcome_get_started">Los geht\'s</string>
+    <string name="step_welcome">Willkommen</string>
+    <string name="step_permissions">Berechtigungen</string>
+    <string name="step_find_device">Gerät finden</string>
+    <string name="step_pair">Koppeln</string>
+    <string name="step_done">Fertig</string>
+
+    <!-- Wizard: Permissions -->
+    <string name="permissions_title">Berechtigungen</string>
+    <string name="permissions_description">FossLink benötigt diese Berechtigungen, um ordnungsgemäß zu funktionieren. Du kannst sie jetzt oder später erteilen.</string>
+    <string name="permissions_granted">Erteilt</string>
+    <string name="permissions_grant">Erteilen</string>
+    <string name="permissions_continue">Weiter</string>
+    <string name="permissions_skip">Vorerst überspringen</string>
+
+    <!-- Wizard: Discovery -->
+    <string name="discovery_title">Finde deinen Computer</string>
+    <string name="discovery_already_connected">Bereits verbunden!</string>
+    <string name="discovery_desktop_fallback">Desktop</string>
+    <string name="discovery_continue">Weiter</string>
+    <string name="discovery_same_wifi">Stelle sicher, dass FossLink auf deinem Computer läuft und beide Geräte im selben WLAN-Netzwerk sind.</string>
+    <string name="discovery_searching">Suche nach Geräten…</string>
+    <string name="discovery_may_take_moment">Dies kann einen Moment dauern</string>
+    <string name="discovery_tap_to_connect">Zum Verbinden tippen</string>
+
+    <!-- Wizard: Pairing -->
+    <string name="pairing_title">Kopplung</string>
+    <string name="pairing_verify_code">Überprüfe, ob dieser Code auf deinem Computer übereinstimmt</string>
+    <string name="pairing_confirm_both">Bestätige auf beiden Geräten, um die Kopplung abzuschließen</string>
+    <string name="pairing_confirm">Bestätigen</string>
+    <string name="pairing_cancel">Abbrechen</string>
+    <string name="pairing_connecting_to">Verbinde mit %1$s…</string>
+    <string name="pairing_waiting">Warte auf Verbindung…</string>
+
+    <!-- Wizard: Success -->
+    <string name="success_title">Alles bereit!</string>
+    <string name="success_message">Erfolgreich mit %1$s gekoppelt. Du kannst jetzt Nachrichten von deinem Computer senden und empfangen.</string>
+    <string name="success_done">Fertig</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_home">Startseite</string>
+    <string name="nav_settings">Einstellungen</string>
+    <string name="nav_about">Über</string>
+
+    <!-- Permission names and descriptions (MainViewModel) -->
+    <string name="perm_sms">SMS</string>
+    <string name="perm_sms_desc">Textnachrichten lesen und senden</string>
+    <string name="perm_contacts">Kontakte</string>
+    <string name="perm_contacts_desc">Kontaktnamen in Unterhaltungen anzeigen</string>
+    <string name="perm_phone">Telefon</string>
+    <string name="perm_phone_desc">Eingehende Anrufe erkennen</string>
+    <string name="perm_notifications">Benachrichtigungen</string>
+    <string name="perm_notifications_desc">Verbindungs- und Kopplungsbenachrichtigungen anzeigen</string>
+    <string name="perm_files_access">Dateizugriff</string>
+    <string name="perm_files_desc">Telefongalerie und Dateien vom Desktop aus durchsuchen</string>
+    <string name="perm_battery">Akku</string>
+    <string name="perm_battery_desc">Verhindern, dass Android Verbindungen drosselt</string>
+    <string name="perm_autostart">Autostart</string>
+    <string name="perm_autostart_desc">Nach Neustart des Telefons automatisch starten</string>
+
+    <!-- Find My Phone -->
+    <string name="findphone_ringing">Dein Telefon klingelt</string>
+    <string name="findphone_tap_to_stop">Tippe irgendwo, um zu stoppen</string>
+
+    <!-- Notifications (ConnectionService) -->
+    <string name="notification_searching">Suche nach Desktop…</string>
+    <string name="notification_connected_to">Verbunden mit %1$s</string>
+    <string name="notification_connected_multiple">Verbunden mit %1$d Desktops</string>
+    <string name="notification_channel_connection">Verbindungsstatus</string>
+    <string name="notification_channel_connection_desc">Zeigt den Verbindungsstatus von FossLink an</string>
+    <string name="notification_channel_url">URL-Freigabe</string>
+    <string name="notification_channel_url_desc">Vom Desktop empfangene URLs</string>
+</resources>

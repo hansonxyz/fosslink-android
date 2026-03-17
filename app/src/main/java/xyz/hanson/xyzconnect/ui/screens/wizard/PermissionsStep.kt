@@ -33,9 +33,11 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import xyz.hanson.fosslink.R
 import xyz.hanson.fosslink.ui.viewmodel.PermissionItem
 import xyz.hanson.fosslink.ui.viewmodel.SpecialAction
 
@@ -69,13 +71,13 @@ fun PermissionsStep(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Permissions",
+            text = stringResource(R.string.permissions_title),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "FossLink needs these permissions to work properly. You can grant them now or later.",
+            text = stringResource(R.string.permissions_description),
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -119,7 +121,7 @@ fun PermissionsStep(
                     if (perm.granted) {
                         Icon(
                             Icons.Filled.Check,
-                            contentDescription = "Granted",
+                            contentDescription = stringResource(R.string.permissions_granted),
                             tint = Color(0xFF4CAF50),
                             modifier = Modifier.size(24.dp)
                         )
@@ -136,14 +138,14 @@ fun PermissionsStep(
                             context.startActivity(intent)
                             onRequestPermission(perm.permission)
                         }) {
-                            Text("Grant")
+                            Text(stringResource(R.string.permissions_grant))
                         }
                     } else {
                         TextButton(onClick = {
                             val allPerms = listOf(perm.permission) + perm.relatedPermissions
                             permissionLauncher.launch(allPerms.toTypedArray())
                         }) {
-                            Text("Grant")
+                            Text(stringResource(R.string.permissions_grant))
                         }
                     }
                 }
@@ -156,13 +158,13 @@ fun PermissionsStep(
             onClick = onNext,
             modifier = Modifier.fillMaxWidth(0.6f)
         ) {
-            Text("Continue")
+            Text(stringResource(R.string.permissions_continue))
         }
 
         Spacer(modifier = Modifier.height(8.dp))
 
         TextButton(onClick = onNext) {
-            Text("Skip for now")
+            Text(stringResource(R.string.permissions_skip))
         }
     }
 }
