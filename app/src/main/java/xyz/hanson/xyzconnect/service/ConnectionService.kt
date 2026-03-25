@@ -472,6 +472,9 @@ class ConnectionService : Service() {
     private fun updateDesktopPairingCode(deviceId: String, code: String?) {
         val existing = _desktopConnections.value[deviceId] ?: return
         _desktopConnections.value = _desktopConnections.value + (deviceId to existing.copy(pairingCode = code))
+        if (code != null) {
+            updateNotification(getString(R.string.notification_pairing_request, existing.deviceName))
+        }
     }
 
     private fun acceptImplicitPairing(deviceId: String) {
@@ -519,8 +522,11 @@ class ConnectionService : Service() {
     // --- Notification ---
 
     private fun updateNotificationText() {
-        val connected = _desktopConnections.value.values.filter { it.state == ConnectionState.CONNECTED }
+        val connections = _desktopConnections.value.values
+        val pairing = connections.firstOrNull { it.pairingCode != null }
+        val connected = connections.filter { it.state == ConnectionState.CONNECTED }
         val text = when {
+            pairing != null -> getString(R.string.notification_pairing_request, pairing.deviceName)
             connected.isEmpty() -> getString(R.string.notification_searching)
             connected.size == 1 -> getString(R.string.notification_connected_to, connected.first().deviceName)
             else -> getString(R.string.notification_connected_multiple, connected.size)

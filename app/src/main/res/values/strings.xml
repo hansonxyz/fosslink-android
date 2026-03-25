@@ -12,6 +12,7 @@
     <string name="home_status">Status</string>
     <string name="home_connecting">Connecting…</string>
     <string name="home_pairing">Pairing…</string>
+    <string name="home_accept_connection">Accept Connection from %1$s</string>
     <string name="home_not_connected">Not connected</string>
     <string name="home_ensure_running">Make sure FossLink is running on your computer</string>
     <string name="home_permissions">Permissions</string>
@@ -120,6 +121,7 @@
     <string name="findphone_tap_to_stop">Tap anywhere to stop</string>
 
     <!-- Notifications (ConnectionService) -->
+    <string name="notification_pairing_request">%1$s wants to pair — tap to accept</string>
     <string name="notification_searching">Searching for desktop…</string>
     <string name="notification_connected_to">Connected to %1$s</string>
     <string name="notification_connected_multiple">Connected to %1$d desktops</string>

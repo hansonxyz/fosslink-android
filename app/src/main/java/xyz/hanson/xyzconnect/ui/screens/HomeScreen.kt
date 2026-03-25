@@ -29,6 +29,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -183,7 +187,11 @@ fun HomeScreen(
                 InfoRow(label = stringResource(R.string.home_status), value = stringResource(R.string.home_connecting), valueColor = Color(0xFFFF9800))
             }
             is AppConnectionState.PairingRequested -> {
-                InfoRow(label = stringResource(R.string.home_status), value = stringResource(R.string.home_pairing), valueColor = Color(0xFFFF9800))
+                PairingRequestCard(
+                    desktopName = appState.desktopName,
+                    pairingCode = appState.pairingCode,
+                    onConfirmPairing = onConfirmPairing
+                )
             }
             else -> {
                 Text(
@@ -307,4 +315,81 @@ private fun PermissionRow(
         }
     }
     HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+}
+
+@Composable
+private fun PairingRequestCard(
+    desktopName: String,
+    pairingCode: String,
+    onConfirmPairing: (String) -> Unit
+) {
+    var showCode by remember { mutableStateOf(false) }
+
+    if (showCode) {
+        // Full pairing card with code and confirm button
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer
+            )
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_device_desktop_32dp),
+                        contentDescription = null,
+                        modifier = Modifier.size(32.dp),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = desktopName,
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Text(
+                            text = stringResource(R.string.home_wants_to_pair),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = stringResource(R.string.home_verify_code_desktop),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = pairingCode,
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Button(
+                    onClick = { onConfirmPairing(pairingCode) },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(stringResource(R.string.home_confirm_pairing))
+                }
+            }
+        }
+    } else {
+        // Compact button to accept the connection
+        Button(
+            onClick = { showCode = true },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_device_desktop_32dp),
+                contentDescription = null,
+                modifier = Modifier.size(20.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(stringResource(R.string.home_accept_connection, desktopName))
+        }
+    }
 }
