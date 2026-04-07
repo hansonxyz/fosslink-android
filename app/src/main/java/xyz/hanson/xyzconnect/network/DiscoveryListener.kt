@@ -37,13 +37,90 @@ class DiscoveryListener(
     /** Fires when any desktop is discovered (for auto-reconnect when paired) */
     var onDeviceDiscovered: ((DiscoveredDesktop) -> Unit)? = null
 
+    private var scope: CoroutineScope? = null
     private var listenJob: Job? = null
     private var broadcastJob: Job? = null
     private var cleanupJob: Job? = null
 
+    /**
+     * Start the passive listener (always on). Listens for desktop broadcasts.
+     * Does NOT start broadcasting — call [startBroadcasting] separately.
+     */
     fun start(scope: CoroutineScope) {
         stop()
+        this.scope = scope
 
+        startListener(scope)
+
+        // Cleanup expired devices periodically
+        cleanupJob = scope.launch {
+            while (isActive) {
+                delay(10_000)
+                val now = System.currentTimeMillis()
+                val current = _discoveredDevices.value
+                val filtered = current.filterValues { now - it.lastSeen < DEVICE_TIMEOUT_MS }
+                if (filtered.size != current.size) {
+                    _discoveredDevices.value = filtered
+                }
+            }
+        }
+    }
+
+    fun stop() {
+        listenJob?.cancel()
+        listenJob = null
+        broadcastJob?.cancel()
+        broadcastJob = null
+        cleanupJob?.cancel()
+        cleanupJob = null
+        scope = null
+    }
+
+    /**
+     * Start broadcasting our presence. Call when the app enters the foreground.
+     */
+    fun startBroadcasting() {
+        val s = scope ?: return
+        if (broadcastJob?.isActive == true) return
+
+        Log.i(TAG, "Broadcasting started (foreground)")
+        broadcastJob = s.launch(Dispatchers.IO) {
+            delay(500)
+            while (isActive) {
+                try {
+                    broadcast()
+                } catch (e: Exception) {
+                    Log.w(TAG, "Broadcast error", e)
+                }
+                delay(BROADCAST_INTERVAL_MS)
+            }
+        }
+    }
+
+    /**
+     * Stop broadcasting. Call when the app enters the background.
+     */
+    fun stopBroadcasting() {
+        if (broadcastJob?.isActive == true) {
+            Log.i(TAG, "Broadcasting stopped (background)")
+        }
+        broadcastJob?.cancel()
+        broadcastJob = null
+    }
+
+    /**
+     * Restart the UDP listener socket. Call when network connectivity changes
+     * (WiFi reconnect, DHCP renewal) since the old socket may be dead.
+     */
+    fun restartListener() {
+        val s = scope ?: return
+        Log.i(TAG, "Restarting listener (network change)")
+        listenJob?.cancel()
+        listenJob = null
+        startListener(s)
+    }
+
+    private fun startListener(scope: CoroutineScope) {
         listenJob = scope.launch(Dispatchers.IO) {
             try {
                 val socket = DatagramSocket(null).apply {
@@ -75,41 +152,6 @@ class DiscoveryListener(
                 Log.e(TAG, "Discovery listener failed to start", e)
             }
         }
-
-        // Broadcast our presence periodically
-        broadcastJob = scope.launch(Dispatchers.IO) {
-            delay(1000) // Initial delay to let socket bind
-            while (isActive) {
-                try {
-                    broadcast()
-                } catch (e: Exception) {
-                    Log.w(TAG, "Broadcast error", e)
-                }
-                delay(BROADCAST_INTERVAL_MS)
-            }
-        }
-
-        // Cleanup expired devices periodically
-        cleanupJob = scope.launch {
-            while (isActive) {
-                delay(10_000)
-                val now = System.currentTimeMillis()
-                val current = _discoveredDevices.value
-                val filtered = current.filterValues { now - it.lastSeen < DEVICE_TIMEOUT_MS }
-                if (filtered.size != current.size) {
-                    _discoveredDevices.value = filtered
-                }
-            }
-        }
-    }
-
-    fun stop() {
-        listenJob?.cancel()
-        listenJob = null
-        broadcastJob?.cancel()
-        broadcastJob = null
-        cleanupJob?.cancel()
-        cleanupJob = null
     }
 
     private fun broadcast() {
@@ -118,7 +160,7 @@ class DiscoveryListener(
             put("deviceId", deviceId)
             put("deviceName", deviceName)
             put("deviceType", "phone")
-            put("wsPort", 0) // Phone doesn't have a WS server
+            put("wsPort", 0)
             put("clientVersion", ProtocolMessage.CLIENT_VERSION)
         }
         val data = json.toString() + "\n"
@@ -146,7 +188,6 @@ class DiscoveryListener(
             val isConnectRequest = type == "fosslink.connect_request"
             if (type != "fosslink.discovery" && !isConnectRequest) return
 
-            // Discovery packets are flat JSON (fields at top level, no "body" wrapper)
             val peerDeviceId = json.optString("deviceId", "")
             val peerDeviceName = json.optString("deviceName", "Unknown")
             val deviceType = json.optString("deviceType", "")
@@ -154,11 +195,7 @@ class DiscoveryListener(
             val clientVersion = json.optString("clientVersion", "0.0.0")
 
             if (peerDeviceId.isEmpty()) return
-
-            // Ignore own broadcasts
             if (peerDeviceId == deviceId) return
-
-            // Phone only discovers desktops/laptops (ignore other phones)
             if (deviceType == "phone" || deviceType == "tablet") return
 
             val desktop = DiscoveredDesktop(
@@ -173,13 +210,11 @@ class DiscoveryListener(
             _discoveredDevices.value = _discoveredDevices.value + (peerDeviceId to desktop)
             Log.d(TAG, "Discovered: $peerDeviceName at ${desktop.address}:$wsPort (new=$isNew, connectRequest=$isConnectRequest)")
 
-            // Auto-connect when desktop explicitly requests it
             if (isConnectRequest) {
                 Log.i(TAG, "Connect request from $peerDeviceName — triggering auto-connect")
                 onConnectRequest?.invoke(desktop)
             }
 
-            // Notify about any discovered desktop (for paired auto-reconnect)
             if (isNew) {
                 onDeviceDiscovered?.invoke(desktop)
             }

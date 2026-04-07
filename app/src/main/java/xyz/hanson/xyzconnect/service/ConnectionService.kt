@@ -4,6 +4,10 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import android.net.Uri
 import android.os.Binder
 import android.os.Build
@@ -62,6 +66,8 @@ class ConnectionService : Service() {
 
     var discoveryListener: DiscoveryListener? = null
         private set
+    private var networkCallback: ConnectivityManager.NetworkCallback? = null
+    private var screenUnlockReceiver: android.content.BroadcastReceiver? = null
     var smsSyncHandler: SmsSyncHandler? = null
         private set
     var contactSyncHandler: ContactSyncHandler? = null
@@ -171,6 +177,32 @@ class ConnectionService : Service() {
             }
             it.start(scope)
         }
+
+        // Restart discovery listener on WiFi connectivity changes (Doze recovery, network switch)
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val request = NetworkRequest.Builder()
+            .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+            .build()
+        networkCallback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                Log.i(TAG, "WiFi available — restarting discovery listener")
+                discoveryListener?.restartListener()
+            }
+
+            override fun onLost(network: Network) {
+                Log.i(TAG, "WiFi lost")
+            }
+        }
+        cm.registerNetworkCallback(request, networkCallback!!)
+
+        // Restart discovery listener on screen unlock (recovers from deep Doze)
+        screenUnlockReceiver = object : android.content.BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                Log.i(TAG, "Screen unlocked — restarting discovery listener")
+                discoveryListener?.restartListener()
+            }
+        }
+        registerReceiver(screenUnlockReceiver, android.content.IntentFilter(Intent.ACTION_USER_PRESENT))
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -195,9 +227,28 @@ class ConnectionService : Service() {
         wsClients.values.forEach { it.disconnect() }
         wsClients.clear()
         discoveryListener?.stop()
+        networkCallback?.let {
+            val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            cm.unregisterNetworkCallback(it)
+            networkCallback = null
+        }
+        screenUnlockReceiver?.let {
+            unregisterReceiver(it)
+            screenUnlockReceiver = null
+        }
         scope.cancel()
         ioScope.cancel()
         Log.i(TAG, "Service destroyed")
+    }
+
+    // --- Foreground broadcasting control ---
+
+    fun onAppForeground() {
+        discoveryListener?.startBroadcasting()
+    }
+
+    fun onAppBackground() {
+        discoveryListener?.stopBroadcasting()
     }
 
     // --- Multi-client management ---
@@ -222,16 +273,21 @@ class ConnectionService : Service() {
         wsClients[newId] = client
     }
 
+    /** Guard against duplicate auto-connect calls racing on different threads */
+    private val autoConnectLock = Any()
+
     private fun autoConnectTo(desktop: DiscoveredDesktop, reason: String) {
-        val existing = wsClients[desktop.deviceId]
-        if (existing != null && existing.connectionState.value != ConnectionState.DISCONNECTED) {
-            return // Already connected or connecting
+        synchronized(autoConnectLock) {
+            val existing = wsClients[desktop.deviceId]
+            if (existing != null && existing.connectionState.value != ConnectionState.DISCONNECTED) {
+                return // Already connected or connecting
+            }
+            Log.i(TAG, "Auto-connecting to ${desktop.deviceName} at ${desktop.address}:${desktop.wsPort} ($reason)")
+            val client = createClient(desktop.deviceId)
+            setupMessageHandlerForClient(desktop.deviceId, client)
+            observeClient(desktop.deviceId, client)
+            client.connect(desktop.address, desktop.wsPort)
         }
-        Log.i(TAG, "Auto-connecting to ${desktop.deviceName} at ${desktop.address}:${desktop.wsPort} ($reason)")
-        val client = createClient(desktop.deviceId)
-        setupMessageHandlerForClient(desktop.deviceId, client)
-        observeClient(desktop.deviceId, client)
-        client.connect(desktop.address, desktop.wsPort)
     }
 
     // --- Message routing ---

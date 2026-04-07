@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.viewmodel.compose.viewModel
+import xyz.hanson.fosslink.service.ConnectionService
 import xyz.hanson.fosslink.ui.navigation.FossLinkNavHost
 import xyz.hanson.fosslink.ui.theme.FossLinkTheme
 import xyz.hanson.fosslink.ui.viewmodel.MainViewModel
@@ -21,5 +22,15 @@ class MainActivity : ComponentActivity() {
                 FossLinkNavHost(viewModel)
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        ConnectionService.instance?.onAppForeground()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        ConnectionService.instance?.onAppBackground()
     }
 }
