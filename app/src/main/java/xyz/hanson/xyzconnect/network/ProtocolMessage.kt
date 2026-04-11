@@ -105,7 +105,13 @@ data class ProtocolMessage(
         const val TYPE_FS_WATCH_EVENT = "fosslink.fs.watch_event"
         const val TYPE_FS_WATCH_EVENT_ACK = "fosslink.fs.watch_event_ack"
 
-        const val CLIENT_VERSION = "1.1.0"
+        // Query system (v1.3)
+        const val TYPE_QUERY = "fosslink.query"
+        const val TYPE_QUERY_RESULT = "fosslink.query.result"
+        const val TYPE_QUERY_ACK = "fosslink.query.ack"
+        const val TYPE_SUBSCRIBE = "fosslink.subscribe"
+
+        const val CLIENT_VERSION = "1.3.0"
         const val MIN_PEER_VERSION = "1.0.0"
 
         fun parse(data: String): ProtocolMessage {

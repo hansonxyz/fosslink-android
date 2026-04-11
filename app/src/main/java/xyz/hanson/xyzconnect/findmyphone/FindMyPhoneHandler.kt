@@ -12,13 +12,14 @@ import android.content.Intent
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.media.RingtoneManager
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.os.PowerManager
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
-import android.provider.Settings
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -39,6 +40,7 @@ class FindMyPhoneHandler(private val context: Context) {
         ContextCompat.getSystemService(context, NotificationManager::class.java)!!
     private var mediaPlayer: MediaPlayer? = null
     private var previousVolume: Int = -1
+    private var wakeLock: PowerManager.WakeLock? = null
     private val handler = Handler(Looper.getMainLooper())
     private val timeoutRunnable = Runnable { stopPlaying() }
 
@@ -72,10 +74,30 @@ class FindMyPhoneHandler(private val context: Context) {
             return
         }
 
+        // Acquire wake lock to prevent Samsung from suspending CPU before audio starts
+        val powerManager = ContextCompat.getSystemService(context, PowerManager::class.java)
+        wakeLock?.release()
+        wakeLock = powerManager?.newWakeLock(
+            PowerManager.PARTIAL_WAKE_LOCK,
+            "FossLink:FindMyPhone"
+        )?.apply {
+            acquire(TIMEOUT_MS)
+        }
+
+        // Use alarm URI with fallbacks — some devices may not have a default set
+        val ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+            ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
+            ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
         try {
             mediaPlayer?.release()
             mediaPlayer = MediaPlayer().apply {
-                setDataSource(context, Settings.System.DEFAULT_RINGTONE_URI)
+                if (ringtoneUri != null) {
+                    setDataSource(context, ringtoneUri)
+                } else {
+                    Log.w(TAG, "No ringtone URI available, using fallback")
+                    setDataSource(context, android.provider.Settings.System.DEFAULT_RINGTONE_URI)
+                }
                 setAudioAttributes(
                     AudioAttributes.Builder()
                         .setUsage(AudioAttributes.USAGE_ALARM)
@@ -88,6 +110,8 @@ class FindMyPhoneHandler(private val context: Context) {
             }
         } catch (e: Exception) {
             Log.e(TAG, "Failed to initialize MediaPlayer", e)
+            wakeLock?.release()
+            wakeLock = null
             return
         }
 
@@ -97,6 +121,13 @@ class FindMyPhoneHandler(private val context: Context) {
             AudioManager.STREAM_ALARM,
             audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM),
             0
+        )
+
+        // Request audio focus so Samsung doesn't suppress playback
+        audioManager.requestAudioFocus(
+            null,
+            AudioManager.STREAM_ALARM,
+            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
         )
 
         mediaPlayer?.start()
@@ -132,6 +163,11 @@ class FindMyPhoneHandler(private val context: Context) {
         // Stop vibration
         vibrator.cancel()
 
+        // Release audio focus and wake lock
+        audioManager.abandonAudioFocus(null)
+        wakeLock?.release()
+        wakeLock = null
+
         // Dismiss notification
         notificationManager.cancel(NOTIFICATION_ID)
     }
@@ -165,7 +201,7 @@ class FindMyPhoneHandler(private val context: Context) {
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle("Find My Phone")
             .setContentText("Your phone is ringing")
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setFullScreenIntent(activityPendingIntent, true)
             .setOngoing(true)

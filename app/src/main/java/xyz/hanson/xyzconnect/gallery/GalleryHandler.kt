@@ -48,55 +48,71 @@ class GalleryHandler(private val context: Context) {
 
     private fun handleScan(msg: ProtocolMessage, send: (ProtocolMessage) -> Unit) {
         val requestId = msg.body.optString("requestId", "")
+        val batchSize = msg.body.optInt("batchSize", 100)
+        val scope = msg.body.optString("scope", "all")
         try {
-            val items = JSONArray()
+            val roots = when (scope) {
+                "dcim" -> listOf(File(storageRoot, "DCIM"))
+                "screenshots" -> listOf(File(storageRoot, "Pictures/Screenshots"))
+                else -> listOf(storageRoot)
+            }
+
             val mimeTypeMap = MimeTypeMap.getSingleton()
+            val itemList = mutableListOf<JSONObject>()
 
-            storageRoot.walk()
-                .filter { it.isFile }
-                .filter { file ->
-                    val ext = file.extension.lowercase()
-                    ext in ALL_MEDIA_EXTENSIONS
-                }
-                .forEach { file ->
-                    val relativePath = file.relativeTo(storageRoot).path
-                    val folder = file.parentFile?.relativeTo(storageRoot)?.path ?: ""
-                    val ext = file.extension.lowercase()
-                    val mimeType = mimeTypeMap.getMimeTypeFromExtension(ext) ?: ""
-                    val kind = if (ext in IMAGE_EXTENSIONS) "image" else "video"
+            for (root in roots) {
+                if (!root.exists()) continue
+                root.walk()
+                    .filter { it.isFile }
+                    .filter { file ->
+                        val ext = file.extension.lowercase()
+                        ext in ALL_MEDIA_EXTENSIONS
+                    }
+                    .forEach { file ->
+                        val relativePath = file.relativeTo(storageRoot).path
+                        val folder = file.parentFile?.relativeTo(storageRoot)?.path ?: ""
+                        val ext = file.extension.lowercase()
+                        val mimeType = mimeTypeMap.getMimeTypeFromExtension(ext) ?: ""
+                        val kind = if (ext in IMAGE_EXTENSIONS) "image" else "video"
+                        val isHidden = relativePath.split(File.separator).any { it.startsWith(".") }
 
-                    // Check if any path component starts with "."
-                    val isHidden = relativePath.split(File.separator).any { it.startsWith(".") }
-
-                    items.put(JSONObject().apply {
-                        put("path", "/$relativePath")
-                        put("filename", file.name)
-                        put("folder", folder)
-                        put("mtime", file.lastModified() / 1000)
-                        put("size", file.length())
-                        put("mimeType", mimeType)
-                        put("isHidden", isHidden)
-                        put("kind", kind)
-                    })
-                }
+                        itemList.add(JSONObject().apply {
+                            put("path", "/$relativePath")
+                            put("filename", file.name)
+                            put("folder", folder)
+                            put("mtime", file.lastModified() / 1000)
+                            put("size", file.length())
+                            put("mimeType", mimeType)
+                            put("isHidden", isHidden)
+                            put("kind", kind)
+                        })
+                    }
+            }
 
             // Sort by mtime descending (newest first)
-            val sortedItems = JSONArray()
-            val itemList = mutableListOf<JSONObject>()
-            for (i in 0 until items.length()) {
-                itemList.add(items.getJSONObject(i))
-            }
             itemList.sortByDescending { it.optLong("mtime", 0L) }
-            for (item in itemList) {
-                sortedItems.put(item)
+
+            Log.d(TAG, "Gallery scan ($scope) found ${itemList.size} media files, sending in batches of $batchSize")
+
+            // Send in batches
+            val totalBatches = if (itemList.isEmpty()) 1 else (itemList.size + batchSize - 1) / batchSize
+            for (batchIdx in 0 until totalBatches) {
+                val start = batchIdx * batchSize
+                val end = minOf(start + batchSize, itemList.size)
+                val batchItems = JSONArray()
+                for (i in start until end) {
+                    batchItems.put(itemList[i])
+                }
+
+                send(ProtocolMessage(ProtocolMessage.TYPE_GALLERY_SCAN_RESPONSE, JSONObject().apply {
+                    put("requestId", requestId)
+                    put("items", batchItems)
+                    put("batch", batchIdx + 1)
+                    put("totalBatches", totalBatches)
+                    put("totalItems", itemList.size)
+                    put("scope", scope)
+                }))
             }
-
-            Log.d(TAG, "Gallery scan found ${sortedItems.length()} media files")
-
-            send(ProtocolMessage(ProtocolMessage.TYPE_GALLERY_SCAN_RESPONSE, JSONObject().apply {
-                put("requestId", requestId)
-                put("items", sortedItems)
-            }))
         } catch (e: Exception) {
             Log.e(TAG, "Gallery scan failed", e)
             send(ProtocolMessage(ProtocolMessage.TYPE_GALLERY_SCAN_RESPONSE, JSONObject().apply {

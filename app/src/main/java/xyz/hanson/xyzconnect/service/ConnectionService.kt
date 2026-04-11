@@ -68,6 +68,8 @@ class ConnectionService : Service() {
         private set
     private var networkCallback: ConnectivityManager.NetworkCallback? = null
     private var screenUnlockReceiver: android.content.BroadcastReceiver? = null
+    var queryServer: xyz.hanson.fosslink.network.QueryServer? = null
+        private set
     var smsSyncHandler: SmsSyncHandler? = null
         private set
     var contactSyncHandler: ContactSyncHandler? = null
@@ -150,6 +152,14 @@ class ConnectionService : Service() {
             } catch (_: Exception) {}
         }
 
+        queryServer = xyz.hanson.fosslink.network.QueryServer().also {
+            it.registerHandler("echo", xyz.hanson.fosslink.query.EchoHandler())
+            it.registerHandler("threads.list", xyz.hanson.fosslink.query.ThreadsListHandler(this))
+            it.registerHandler("threads.messages", xyz.hanson.fosslink.query.ThreadsMessagesHandler(this))
+            it.registerHandler("contacts.list", xyz.hanson.fosslink.query.ContactsListHandler(this))
+            it.registerHandler("contacts.photos", xyz.hanson.fosslink.query.ContactsPhotosHandler(this))
+            it.registerHandler("gallery.scan", xyz.hanson.fosslink.query.GalleryScanHandler())
+        }
         smsSyncHandler = SmsSyncHandler(this)
         contactSyncHandler = ContactSyncHandler(this)
         attachmentHandler = AttachmentHandler(this)
@@ -333,6 +343,21 @@ class ConnectionService : Service() {
                     Log.i(TAG, "Unpaired by $deviceId")
                     removePairedDevice(deviceId)
                     updateDesktopPairingCode(deviceId, null)
+                }
+                ProtocolMessage.TYPE_QUERY -> {
+                    acceptImplicitPairing(deviceId)
+                    val qs = queryServer ?: return@onMessage
+                    ioScope.launch {
+                        qs.handleQuery(msg, sendToThis)
+                    }
+                }
+                ProtocolMessage.TYPE_QUERY_ACK -> {
+                    queryServer?.handleAck(msg)
+                }
+                ProtocolMessage.TYPE_SUBSCRIBE -> {
+                    acceptImplicitPairing(deviceId)
+                    Log.i(TAG, "Subscribe request from $deviceId — starting event handler")
+                    smsEventHandler?.start(sendToThis)
                 }
                 ProtocolMessage.TYPE_SYNC_START, ProtocolMessage.TYPE_SYNC_ACK -> {
                     acceptImplicitPairing(deviceId)
