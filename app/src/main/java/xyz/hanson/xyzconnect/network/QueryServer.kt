@@ -30,6 +30,7 @@ class QueryServer {
     private var activeNextPage = 0   // next page index to send (0-based)
     private var activeSentCount = 0  // pages sent but not yet ACKed
     private var activeSend: ((ProtocolMessage) -> Unit)? = null
+    private var activeQueryTimestamp: Long = 0
 
     /** Register a resource handler. */
     fun registerHandler(resource: String, handler: QueryHandler) {
@@ -67,6 +68,9 @@ class QueryServer {
         }
 
         Log.i(TAG, "Executing query: $resource (queryId=$queryId)")
+
+        // Record timestamp before query executes — used by desktop for delete detection
+        val queryTimestamp = System.currentTimeMillis()
 
         // Execute the full query
         val result: JSONArray
@@ -111,6 +115,7 @@ class QueryServer {
         activeNextPage = 0
         activeSentCount = 0
         activeSend = send
+        activeQueryTimestamp = queryTimestamp
 
         // Send initial burst (up to MAX_IN_FLIGHT pages)
         sendPages()
@@ -163,6 +168,7 @@ class QueryServer {
                 put("pageId", pageId)
                 put("page", pageIndex + 1)       // 1-based page number
                 put("totalPages", totalPages)
+                put("queryTimestamp", activeQueryTimestamp)
                 put("data", pageData)
             }
 

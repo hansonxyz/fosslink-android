@@ -111,7 +111,7 @@ data class ProtocolMessage(
         const val TYPE_QUERY_ACK = "fosslink.query.ack"
         const val TYPE_SUBSCRIBE = "fosslink.subscribe"
 
-        const val CLIENT_VERSION = "1.3.0"
+        const val CLIENT_VERSION = "1.4.0"
         const val MIN_PEER_VERSION = "1.0.0"
 
         fun parse(data: String): ProtocolMessage {
