@@ -254,9 +254,12 @@ object SmsReader {
             )?.use { cursor ->
                 val idCol = cursor.getColumnIndex("_id")
                 val dateCol = cursor.getColumnIndex("date")
+                val archivedCol = cursor.getColumnIndex("archived")
 
                 while (cursor.moveToNext()) {
                     if (idCol >= 0 && !cursor.isNull(idCol)) {
+                        // Skip archived (trashed) threads — treat them as non-existent
+                        if (archivedCol >= 0 && cursor.getInt(archivedCol) == 1) continue
                         val threadId = cursor.getLong(idCol)
                         val date = if (dateCol >= 0 && !cursor.isNull(dateCol)) cursor.getLong(dateCol) else 0L
                         threadIds.add(threadId to date)

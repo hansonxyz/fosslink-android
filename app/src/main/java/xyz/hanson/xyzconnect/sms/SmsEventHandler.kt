@@ -318,6 +318,16 @@ class SmsEventHandler(private val context: Context) {
         send(ProtocolMessage(ProtocolMessage.TYPE_SETTINGS, body))
     }
 
+    /**
+     * Trigger message detection explicitly. Call after a self-initiated send (e.g., MMS)
+     * to push the sent event to the desktop immediately, without waiting for ContentObserver.
+     */
+    fun triggerDetection() {
+        if (observer == null) return  // Not started
+        detectNewMessages()
+        detectStateChanges()
+    }
+
     // --- Event builders ---
 
     private fun buildMessageEvent(eventType: String, messages: List<JSONObject>): ProtocolMessage {

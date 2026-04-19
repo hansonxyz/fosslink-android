@@ -33,17 +33,17 @@ class MmsPduBuilder {
     )
 
     fun buildSendReq(
-        recipientNumber: String,
+        recipientNumbers: List<String>,
         textBody: String?,
         attachments: List<MmsAttachment>
     ): ByteArray {
         val out = ByteArrayOutputStream()
-        writeHeaders(out, recipientNumber)
+        writeHeaders(out, recipientNumbers)
         writeMultipartBody(out, textBody, attachments)
         return out.toByteArray()
     }
 
-    private fun writeHeaders(out: ByteArrayOutputStream, recipientNumber: String) {
+    private fun writeHeaders(out: ByteArrayOutputStream, recipientNumbers: List<String>) {
         // X-Mms-Message-Type: m-send-req
         out.write(HEADER_MESSAGE_TYPE)
         out.write(MESSAGE_TYPE_SEND_REQ)
@@ -62,11 +62,12 @@ class MmsPduBuilder {
         out.write(0x01) // Value-length: 1 byte follows
         out.write(0x81) // Insert-address-token
 
-        // To: <phone/TYPE=PLMN>
-        out.write(HEADER_TO)
-        val toValue = formatPhoneNumber(recipientNumber)
-        out.write(toValue.toByteArray(Charsets.US_ASCII))
-        out.write(0)
+        // To: one header per recipient (OMA-WAP-MMS-ENC allows multiple To headers)
+        for (number in recipientNumbers) {
+            out.write(HEADER_TO)
+            out.write(formatPhoneNumber(number).toByteArray(Charsets.US_ASCII))
+            out.write(0)
+        }
 
         // Content-Type: application/vnd.wap.multipart.mixed
         // MUST be the last header. Using Content-general-form with value-length

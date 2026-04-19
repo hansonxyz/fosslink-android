@@ -17,8 +17,10 @@ import android.telephony.SmsManager
 import android.util.Base64
 import android.util.Log
 import androidx.core.content.FileProvider
+import org.json.JSONArray
 import org.json.JSONObject
 import xyz.hanson.fosslink.network.ProtocolMessage
+import xyz.hanson.fosslink.service.ConnectionService
 import java.io.File
 
 /**
@@ -34,28 +36,34 @@ class SmsSendHandler(private val context: Context) {
     private val handler = Handler(Looper.getMainLooper())
 
     fun handleMessage(msg: ProtocolMessage, send: (ProtocolMessage) -> Unit) {
-        val phoneNumber = msg.body.optString("phoneNumber", "")
         val messageBody = msg.body.optString("messageBody", "")
         val queueId = msg.body.optString("queueId", "")
         val attachmentsJson = msg.body.optJSONArray("attachments")
 
-        if (phoneNumber.isEmpty()) {
-            Log.w(TAG, "Send missing phoneNumber")
+        // Accept phoneNumbers (array) or fall back to phoneNumber (single string)
+        val recipients: List<String> = msg.body.optJSONArray("phoneNumbers")
+            ?.let { arr -> (0 until arr.length()).map { arr.getString(it) }.filter { it.isNotEmpty() } }
+            ?: msg.body.optString("phoneNumber", "").takeIf { it.isNotEmpty() }?.let { listOf(it) }
+            ?: emptyList()
+
+        if (recipients.isEmpty()) {
+            Log.w(TAG, "Send missing phoneNumber/phoneNumbers")
             sendStatus(send, queueId, "failed", "Missing phone number")
             return
         }
 
         val hasAttachments = attachmentsJson != null && attachmentsJson.length() > 0
 
-        if (hasAttachments) {
-            sendMms(phoneNumber, messageBody, attachmentsJson!!, queueId, send)
+        if (hasAttachments || recipients.size > 1) {
+            // MMS: required for attachments and for group sends
+            sendMms(recipients, messageBody, attachmentsJson ?: JSONArray(), queueId, send)
         } else {
             if (messageBody.isEmpty()) {
                 Log.w(TAG, "Send SMS missing messageBody")
                 sendStatus(send, queueId, "failed", "Missing message body")
                 return
             }
-            sendSms(phoneNumber, messageBody, queueId, send)
+            sendSms(recipients[0], messageBody, queueId, send)
         }
     }
 
@@ -86,12 +94,13 @@ class SmsSendHandler(private val context: Context) {
     }
 
     private fun sendMms(
-        phoneNumber: String,
+        recipients: List<String>,
         messageBody: String,
         attachmentsJson: org.json.JSONArray,
         queueId: String,
         send: (ProtocolMessage) -> Unit
     ) {
+        val phoneNumber = recipients.joinToString(", ")
         Log.i(TAG, "Sending MMS to $phoneNumber (${attachmentsJson.length()} attachment(s), " +
                 "text=${messageBody.length} chars, queueId=$queueId)")
 
@@ -112,15 +121,15 @@ class SmsSendHandler(private val context: Context) {
                 attachments.add(MmsPduBuilder.MmsAttachment(fileName, mimeType, data))
             }
 
-            if (attachments.isEmpty()) {
-                Log.w(TAG, "No valid attachments after decoding")
-                sendStatus(send, queueId, "failed", "No valid attachments")
+            if (attachments.isEmpty() && messageBody.isEmpty()) {
+                Log.w(TAG, "MMS has no content (no attachments, no text)")
+                sendStatus(send, queueId, "failed", "No content to send")
                 return
             }
 
             // 2. Build MMS PDU
             val pduBytes = MmsPduBuilder().buildSendReq(
-                recipientNumber = phoneNumber,
+                recipientNumbers = recipients,
                 textBody = messageBody.ifEmpty { null },
                 attachments = attachments
             )
@@ -160,6 +169,9 @@ class SmsSendHandler(private val context: Context) {
                     if (rc == Activity.RESULT_OK) {
                         Log.i(TAG, "MMS sent successfully to $phoneNumber (queueId=$queueId)")
                         sendStatus(send, queueId, "sent")
+                        // Trigger event detection so all connected desktops receive the sent
+                        // message event immediately (don't rely on ContentObserver timing).
+                        ConnectionService.instance?.smsEventHandler?.triggerDetection()
                     } else {
                         Log.w(TAG, "MMS send failed to $phoneNumber (resultCode=$rc, queueId=$queueId)")
                         sendStatus(send, queueId, "failed", "MMS send failed (code $rc)")
