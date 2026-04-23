@@ -167,6 +167,7 @@ class ConnectionService : Service() {
             it.registerHandler("read.set", readHandler.setHandler)
             it.registerHandler("threads.count", xyz.hanson.fosslink.query.ThreadsCountHandler(this@ConnectionService))
             it.registerHandler("threads.media", xyz.hanson.fosslink.query.ThreadsMediaHandler(this@ConnectionService))
+            it.registerHandler("attachments.sizes", xyz.hanson.fosslink.query.AttachmentSizesHandler(this@ConnectionService))
         }
         smsSyncHandler = SmsSyncHandler(this)
         contactSyncHandler = ContactSyncHandler(this)
