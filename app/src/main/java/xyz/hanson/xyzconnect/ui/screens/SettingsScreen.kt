@@ -49,7 +49,8 @@ fun SettingsScreen(
     pairedDevices: List<DesktopInfo>,
     onDisconnect: (String) -> Unit,
     onForgetDesktop: (String) -> Unit,
-    onForgetAll: () -> Unit
+    onForgetAll: () -> Unit,
+    onOpenSamsungSettings: (() -> Unit)? = null,
 ) {
     val context = LocalContext.current
     var showResetDialog by remember { mutableStateOf(false) }
@@ -181,6 +182,32 @@ fun SettingsScreen(
                         prefs.edit().putBoolean("root_integration", enabled).apply()
                     }
                 )
+            }
+        }
+
+        // Samsung-only re-entry into the deep-sleep setup screen. Plain row,
+        // no granted/not-granted indicator (we can't actually verify the
+        // Samsung "Never sleeping apps" list).
+        if (android.os.Build.MANUFACTURER.equals("samsung", ignoreCase = true) && onOpenSamsungSettings != null) {
+            Spacer(modifier = Modifier.height(24.dp))
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onOpenSamsungSettings() },
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        text = stringResource(R.string.settings_samsung_battery_title),
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Medium
+                    )
+                    Text(
+                        text = stringResource(R.string.settings_samsung_battery_subtitle),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
         }
     }

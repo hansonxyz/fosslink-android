@@ -3,7 +3,11 @@ package xyz.hanson.fosslink.ui.viewmodel
 /** Action to perform for special-access permissions */
 enum class SpecialAction {
     FILES_ACCESS,
-    BATTERY_OPTIMIZATION
+    BATTERY_OPTIMIZATION,
+    /** Samsung-specific: open Device Care so the user can add the app to
+     *  "Never sleeping apps". The intent is best-effort and may fail on
+     *  non-Samsung devices or unexpected Samsung firmware versions. */
+    SAMSUNG_DEVICE_CARE,
 }
 
 data class PermissionItem(

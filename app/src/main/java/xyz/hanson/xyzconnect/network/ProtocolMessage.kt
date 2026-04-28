@@ -20,12 +20,6 @@ data class ProtocolMessage(
         const val PAIR_REQUEST = "fosslink.pair_request"
         const val UNPAIR = "fosslink.unpair"
 
-        // SMS sync
-        const val TYPE_SYNC_START = "fosslink.sms.sync_start"
-        const val TYPE_SYNC_BATCH = "fosslink.sms.sync_batch"
-        const val TYPE_SYNC_COMPLETE = "fosslink.sms.sync_complete"
-        const val TYPE_SYNC_ACK = "fosslink.sms.sync_ack"
-
         // Contacts
         const val TYPE_CONTACTS_SYNC = "fosslink.contacts.sync"
         const val TYPE_CONTACTS_REQUEST_PHOTO = "fosslink.contacts.request_photo"
@@ -76,8 +70,6 @@ data class ProtocolMessage(
         const val TYPE_CONTACTS_MIGRATION_EXECUTE_RESPONSE = "fosslink.contacts.migration_execute_response"
 
         // Gallery
-        const val TYPE_GALLERY_SCAN = "fosslink.gallery.scan"
-        const val TYPE_GALLERY_SCAN_RESPONSE = "fosslink.gallery.scan_response"
         const val TYPE_GALLERY_THUMBNAIL = "fosslink.gallery.thumbnail"
         const val TYPE_GALLERY_THUMBNAIL_RESPONSE = "fosslink.gallery.thumbnail_response"
         const val TYPE_GALLERY_MEDIA_EVENT = "fosslink.gallery.media_event"
@@ -109,10 +101,11 @@ data class ProtocolMessage(
         const val TYPE_QUERY = "fosslink.query"
         const val TYPE_QUERY_RESULT = "fosslink.query.result"
         const val TYPE_QUERY_ACK = "fosslink.query.ack"
+        const val TYPE_QUERY_CANCEL = "fosslink.query.cancel"
         const val TYPE_SUBSCRIBE = "fosslink.subscribe"
 
-        const val CLIENT_VERSION = "1.7.0"
-        const val MIN_PEER_VERSION = "1.0.0"
+        const val CLIENT_VERSION = "1.7.1"
+        const val MIN_PEER_VERSION = "1.7.1"
 
         fun parse(data: String): ProtocolMessage {
             val json = JSONObject(data)

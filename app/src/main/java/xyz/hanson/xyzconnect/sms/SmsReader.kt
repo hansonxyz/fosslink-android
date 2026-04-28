@@ -31,6 +31,9 @@ object SmsReader {
      */
     private const val MMS_ID_OFFSET = 2_000_000_000L
 
+    /** MMS PDU header type constants (from MMS protocol spec). */
+    private const val PDU_TYPE_FROM = 137
+
     private const val THUMBNAIL_SIZE = 100
 
     // MMS address types (from PduHeaders)
@@ -438,7 +441,7 @@ object SmsReader {
 
         // Get MMS body text and attachments
         val bodyAndParts = getMmsBodyAndParts(context, id)
-        val addresses = getMmsAddresses(context, id)
+        val addresses = getMmsAddresses(context, id, messageBox)
 
         // Determine event flags
         var event = 1  // EVENT_TEXT_MESSAGE
@@ -548,11 +551,26 @@ object SmsReader {
     }
 
     /**
-     * Get MMS addresses, filtering out the local user's numbers.
+     * Get MMS addresses for the desktop. Returns ONLY the other parties —
+     * the user's own number (i.e. the FROM header for outgoing messages) is
+     * filtered out so the desktop can use addresses[0] as the thread's
+     * canonical contact.
+     *
+     * MMS PDU address types (per spec):
+     *   0x89 = 137 = FROM
+     *   0x97 = 151 = TO
+     *   0x82 = 130 = BCC
+     *
+     * For an OUTGOING MMS the FROM header is the user's own number — drop it.
+     * For an INCOMING MMS the FROM header is the sender — keep it. The TO
+     * list of an incoming group MMS may include the user too; that's a
+     * separate edge case (group threads need a self-number filter we don't
+     * yet have) and isn't fixed here.
      */
-    private fun getMmsAddresses(context: Context, mmsId: Long): JSONArray {
+    private fun getMmsAddresses(context: Context, mmsId: Long, messageBox: Int): JSONArray {
         val addresses = JSONArray()
         val uri = "content://mms/$mmsId/addr".toUri()
+        val isOutgoing = messageBox == Telephony.Mms.MESSAGE_BOX_SENT
 
         try {
             context.contentResolver.query(
@@ -569,15 +587,11 @@ object SmsReader {
                     val address = if (addressCol >= 0) cursor.getString(addressCol) else null
                     val type = if (typeCol >= 0) cursor.getInt(typeCol) else 0
 
-                    // Skip "from" addresses for outgoing (they're us), but include for incoming
-                    // Skip the placeholder "insert-address-token"
-                    if (address != null && address != "insert-address-token") {
-                        // For outgoing MMS (type=137 is FROM header), skip our own number
-                        // For incoming MMS, the FROM is the sender (include it)
-                        // Type 137 = FROM, Type 151 = TO
-                        // Include all non-placeholder addresses — the desktop handles dedup
-                        addresses.put(JSONObject().put("address", address))
-                    }
+                    if (address.isNullOrEmpty() || address == "insert-address-token") continue
+                    // For outgoing MMS, the FROM (137) is us — drop it.
+                    if (isOutgoing && type == PDU_TYPE_FROM) continue
+
+                    addresses.put(JSONObject().put("address", address))
                 }
             }
         } catch (e: Exception) {
@@ -591,6 +605,7 @@ object SmsReader {
 
         return addresses
     }
+
 
     /**
      * Generate a base64-encoded thumbnail for an image attachment.

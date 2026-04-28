@@ -113,8 +113,27 @@
     <string name="perm_files_desc">Browse phone gallery and files from desktop</string>
     <string name="perm_battery">Battery</string>
     <string name="perm_battery_desc">Prevent Android from throttling connections</string>
+    <string name="perm_battery_desc_samsung">Prevent Android from throttling connections. After granting, also add FossLink to Settings → Battery → Background usage limits → Never sleeping apps.</string>
     <string name="perm_autostart">Autostart</string>
     <string name="perm_autostart_desc">Start automatically after phone reboots</string>
+    <string name="perm_samsung_device_care">Never sleeping apps</string>
+    <string name="perm_samsung_device_care_desc">Samsung kills apps from screen-locked sleep even with battery optimization off. Open Device Care and add FossLink to "Never sleeping apps".</string>
+
+    <!-- Samsung deep-sleep wizard step -->
+    <string name="samsung_screen_title">Samsung Battery Settings</string>
+    <string name="samsung_screen_intro">FossLink runs in the background to keep your phone connected to your desktop. Samsung phones aggressively put background apps to sleep, even ones running as foreground services, which will cause FossLink to silently disconnect when the screen is locked.</string>
+    <string name="samsung_screen_what_to_do">To prevent this:</string>
+    <string name="samsung_screen_step1">1. Tap "Open Device Care" below.</string>
+    <string name="samsung_screen_step2">2. Open "Background usage limits" (or "Sleeping apps" depending on your Android version).</string>
+    <string name="samsung_screen_step3">3. Add FossLink to the "Never sleeping apps" list (or remove it from "Sleeping apps" / "Deep sleeping apps" if it appears there).</string>
+    <string name="samsung_screen_open_btn">Open Device Care</string>
+    <string name="samsung_screen_continue_disabled_hint">Tap "Open Device Care" first to continue</string>
+    <string name="samsung_screen_continue">Continue</string>
+    <string name="samsung_screen_close">Close</string>
+
+    <!-- Settings entry that opens the Samsung screen in settings mode -->
+    <string name="settings_samsung_battery_title">Samsung "Never sleeping apps"</string>
+    <string name="settings_samsung_battery_subtitle">Re-open the Samsung-specific battery setup screen.</string>
 
     <!-- Find My Phone -->
     <string name="findphone_ringing">Your phone is ringing</string>

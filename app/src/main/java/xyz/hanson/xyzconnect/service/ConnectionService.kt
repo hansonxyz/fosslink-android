@@ -28,7 +28,6 @@ import xyz.hanson.fosslink.contacts.ContactSyncHandler
 import xyz.hanson.fosslink.sms.AttachmentHandler
 import xyz.hanson.fosslink.sms.SmsEventHandler
 import xyz.hanson.fosslink.sms.SmsSendHandler
-import xyz.hanson.fosslink.sms.SmsSyncHandler
 import xyz.hanson.fosslink.filesystem.FsWatchHandler
 import xyz.hanson.fosslink.findmyphone.FindMyPhoneHandler
 import xyz.hanson.fosslink.storage.StorageAnalyzer
@@ -69,8 +68,6 @@ class ConnectionService : Service() {
     private var networkCallback: ConnectivityManager.NetworkCallback? = null
     private var screenUnlockReceiver: android.content.BroadcastReceiver? = null
     var queryServer: xyz.hanson.fosslink.network.QueryServer? = null
-        private set
-    var smsSyncHandler: SmsSyncHandler? = null
         private set
     var contactSyncHandler: ContactSyncHandler? = null
         private set
@@ -169,7 +166,6 @@ class ConnectionService : Service() {
             it.registerHandler("threads.media", xyz.hanson.fosslink.query.ThreadsMediaHandler(this@ConnectionService))
             it.registerHandler("attachments.sizes", xyz.hanson.fosslink.query.AttachmentSizesHandler(this@ConnectionService))
         }
-        smsSyncHandler = SmsSyncHandler(this)
         contactSyncHandler = ContactSyncHandler(this)
         attachmentHandler = AttachmentHandler(this)
         smsEventHandler = SmsEventHandler(this)
@@ -363,17 +359,13 @@ class ConnectionService : Service() {
                 ProtocolMessage.TYPE_QUERY_ACK -> {
                     queryServer?.handleAck(msg)
                 }
+                ProtocolMessage.TYPE_QUERY_CANCEL -> {
+                    queryServer?.handleCancel(msg)
+                }
                 ProtocolMessage.TYPE_SUBSCRIBE -> {
                     acceptImplicitPairing(deviceId)
                     Log.i(TAG, "Subscribe request from $deviceId — starting event handler")
                     smsEventHandler?.start(sendToThis)
-                }
-                ProtocolMessage.TYPE_SYNC_START, ProtocolMessage.TYPE_SYNC_ACK -> {
-                    acceptImplicitPairing(deviceId)
-                    val syncHandler = smsSyncHandler ?: return@onMessage
-                    ioScope.launch {
-                        syncHandler.handleMessage(msg, sendToThis)
-                    }
                 }
                 ProtocolMessage.TYPE_CONTACTS_SYNC, ProtocolMessage.TYPE_CONTACTS_REQUEST_PHOTO -> {
                     acceptImplicitPairing(deviceId)
@@ -440,7 +432,6 @@ class ConnectionService : Service() {
                         migrationHandler.handleMessage(msg, sendToThis)
                     }
                 }
-                ProtocolMessage.TYPE_GALLERY_SCAN,
                 ProtocolMessage.TYPE_GALLERY_THUMBNAIL -> {
                     val gHandler = galleryHandler ?: return@onMessage
                     gHandler.handleMessage(msg, sendToThis)
@@ -524,6 +515,8 @@ class ConnectionService : Service() {
             batteryHandler?.stop()
             galleryEventHandler?.stop()
             fsWatchHandler?.clearSendFunction()
+            // Abort any in-flight query — no client is waiting for it.
+            queryServer?.cancelActive()
         }
     }
 

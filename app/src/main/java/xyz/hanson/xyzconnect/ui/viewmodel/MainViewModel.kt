@@ -47,6 +47,15 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     private val _isSetupComplete = MutableStateFlow(false)
     val isSetupComplete: StateFlow<Boolean> = _isSetupComplete
 
+    /** Samsung "Never sleeping apps" acknowledgment. We can't programmatically
+     *  verify the user did the thing — this is just a "user said they did".
+     *  Set when the user clicks Continue/Next from the dedicated screen.
+     *  Used to gate the forced-redirect on app launch for upgrade installs. */
+    private val _samsungDeepSleepAcknowledged = MutableStateFlow(false)
+    val samsungDeepSleepAcknowledged: StateFlow<Boolean> = _samsungDeepSleepAcknowledged
+
+    val isSamsungDevice: Boolean get() = android.os.Build.MANUFACTURER.equals("samsung", ignoreCase = true)
+
     // Discovery
     private val _discoveredDevices = MutableStateFlow<Map<String, DiscoveredDesktop>>(emptyMap())
 
@@ -107,6 +116,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             )
         } else {
             _isSetupComplete.value = prefs.getBoolean("setup_complete", false)
+            _samsungDeepSleepAcknowledged.value = prefs.getBoolean("samsung_deep_sleep_acknowledged", false)
             refreshPermissions()
 
             val context = getApplication<Application>()
@@ -248,30 +258,35 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             )
         }
         val pm = getApplication<Application>().getSystemService(Context.POWER_SERVICE) as PowerManager
+        val isSamsung = android.os.Build.MANUFACTURER.equals("samsung", ignoreCase = true)
         items.add(
             PermissionItem(
                 name = str(R.string.perm_battery),
                 permission = "battery_optimization",
                 granted = pm.isIgnoringBatteryOptimizations(getApplication<Application>().packageName),
-                description = str(R.string.perm_battery_desc),
+                description = if (isSamsung) str(R.string.perm_battery_desc_samsung) else str(R.string.perm_battery_desc),
                 isSpecialAccess = true,
                 specialAction = SpecialAction.BATTERY_OPTIMIZATION
             )
         )
-        items.add(
-            PermissionItem(
-                name = str(R.string.perm_autostart),
-                permission = "autostart",
-                granted = true,
-                description = str(R.string.perm_autostart_desc)
-            )
-        )
+        // Samsung's "Never sleeping apps" list is a separate flow — handled
+        // by a dedicated wizard step / settings entry rather than a regular
+        // permission item, since we can't programmatically check it and the
+        // explanation needs more screen real estate than a list row.
         _permissions.value = items
     }
 
     fun completeSetup() {
         prefs.edit().putBoolean("setup_complete", true).apply()
         _isSetupComplete.value = true
+    }
+
+    /** Persist the Samsung "Never sleeping apps" acknowledgment. Called when
+     *  the user clicks Continue/Next on the dedicated screen. Settings-mode
+     *  visits do NOT call this — they don't change the flag. */
+    fun acknowledgeSamsungDeepSleep() {
+        prefs.edit().putBoolean("samsung_deep_sleep_acknowledged", true).apply()
+        _samsungDeepSleepAcknowledged.value = true
     }
 
     // --- Private helpers ---

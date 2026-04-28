@@ -267,15 +267,7 @@ private fun PermissionRow(
 
     val onClick: () -> Unit = if (perm.isSpecialAccess) {
         {
-            val intent = when (perm.specialAction) {
-                SpecialAction.BATTERY_OPTIMIZATION -> Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
-                    data = Uri.parse("package:${context.packageName}")
-                }
-                else -> Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).apply {
-                    data = Uri.parse("package:${context.packageName}")
-                }
-            }
-            context.startActivity(intent)
+            launchSpecialAction(context, perm.specialAction)
             onRequestPermission(perm.permission)
         }
     } else {
@@ -391,5 +383,48 @@ private fun PairingRequestCard(
             Spacer(modifier = Modifier.width(8.dp))
             Text(stringResource(R.string.home_accept_connection, desktopName))
         }
+    }
+}
+
+/** Launch the OS-level intent for a special-access permission. Best-effort —
+ *  Samsung intents are firmware-version specific and may need fallback. */
+private fun launchSpecialAction(
+    context: android.content.Context,
+    action: SpecialAction?,
+) {
+    val attempts: List<Intent> = when (action) {
+        SpecialAction.BATTERY_OPTIMIZATION -> listOf(
+            Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+                data = Uri.parse("package:${context.packageName}")
+            }
+        )
+        SpecialAction.SAMSUNG_DEVICE_CARE -> listOf(
+            Intent().setClassName(
+                "com.samsung.android.lool",
+                "com.samsung.android.sm.battery.ui.BatteryActivity"
+            ),
+            Intent().setClassName(
+                "com.samsung.android.lool",
+                "com.samsung.android.sm.ui.battery.BatteryActivity"
+            ),
+            Intent().setClassName(
+                "com.samsung.android.sm",
+                "com.samsung.android.sm.battery.ui.BatteryActivity"
+            ),
+            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                data = Uri.parse("package:${context.packageName}")
+            }
+        )
+        SpecialAction.FILES_ACCESS, null -> listOf(
+            Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).apply {
+                data = Uri.parse("package:${context.packageName}")
+            }
+        )
+    }
+    for (intent in attempts) {
+        try {
+            context.startActivity(intent)
+            return
+        } catch (_: Exception) { /* try next */ }
     }
 }

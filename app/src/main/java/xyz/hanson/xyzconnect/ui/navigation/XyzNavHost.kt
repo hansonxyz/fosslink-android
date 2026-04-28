@@ -12,8 +12,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import xyz.hanson.fosslink.ui.screens.AboutScreen
 import xyz.hanson.fosslink.ui.screens.HomeScreen
+import xyz.hanson.fosslink.ui.screens.SamsungDeepSleepScreen
+import xyz.hanson.fosslink.ui.screens.SamsungScreenMode
 import xyz.hanson.fosslink.ui.screens.SettingsScreen
 import xyz.hanson.fosslink.ui.screens.wizard.DiscoveryStep
 import xyz.hanson.fosslink.ui.screens.wizard.PairStep
@@ -30,8 +34,19 @@ fun FossLinkNavHost(viewModel: MainViewModel) {
     val appState by viewModel.appState.collectAsState()
     val permissions by viewModel.permissions.collectAsState()
     val pairedDevices by viewModel.pairedDevices.collectAsState()
+    val samsungAcked by viewModel.samsungDeepSleepAcknowledged.collectAsState()
 
-    val startDestination = if (isSetupComplete) NavRoutes.MAIN else NavRoutes.WIZARD
+    // Forced entry into the Samsung screen for upgrade installs: existing
+    // setup is complete, but the user has never seen / acknowledged the
+    // Samsung-specific battery setup. They must complete it before reaching
+    // the main UI.
+    val needsSamsungForced = isSetupComplete && viewModel.isSamsungDevice && !samsungAcked
+
+    val startDestination = when {
+        !isSetupComplete -> NavRoutes.WIZARD
+        needsSamsungForced -> NavRoutes.samsungDeepSleep(NavRoutes.SAMSUNG_MODE_FORCED)
+        else -> NavRoutes.MAIN
+    }
 
     // Show bottom nav only for main screens
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -67,6 +82,21 @@ fun FossLinkNavHost(viewModel: MainViewModel) {
                         permissions = permissions,
                         onRequestPermission = { viewModel.refreshPermissions() },
                         onNext = {
+                            // Insert the Samsung step on Samsung devices
+                            // before discovery; skip it elsewhere.
+                            if (viewModel.isSamsungDevice) {
+                                navController.navigate(NavRoutes.WIZARD_SAMSUNG)
+                            } else {
+                                navController.navigate(NavRoutes.WIZARD_DISCOVERY)
+                            }
+                        }
+                    )
+                }
+                composable(NavRoutes.WIZARD_SAMSUNG) {
+                    SamsungDeepSleepScreen(
+                        mode = SamsungScreenMode.Wizard,
+                        onContinue = {
+                            viewModel.acknowledgeSamsungDeepSleep()
                             navController.navigate(NavRoutes.WIZARD_DISCOVERY)
                         }
                     )
@@ -131,6 +161,34 @@ fun FossLinkNavHost(viewModel: MainViewModel) {
                 }
             }
 
+            // Standalone Samsung deep-sleep screen — used for both the
+            // forced upgrade flow and re-entry from settings. Mode arg
+            // controls dismiss semantics.
+            composable(
+                route = NavRoutes.SAMSUNG_DEEP_SLEEP,
+                arguments = listOf(navArgument("mode") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val modeArg = backStackEntry.arguments?.getString("mode")
+                val mode = if (modeArg == NavRoutes.SAMSUNG_MODE_FORCED) {
+                    SamsungScreenMode.Forced
+                } else {
+                    SamsungScreenMode.Settings
+                }
+                SamsungDeepSleepScreen(
+                    mode = mode,
+                    onContinue = {
+                        if (mode == SamsungScreenMode.Forced) {
+                            viewModel.acknowledgeSamsungDeepSleep()
+                            navController.navigate(NavRoutes.MAIN) {
+                                popUpTo(NavRoutes.SAMSUNG_DEEP_SLEEP) { inclusive = true }
+                            }
+                        } else {
+                            navController.popBackStack()
+                        }
+                    }
+                )
+            }
+
             // Main app flow
             navigation(
                 startDestination = NavRoutes.MAIN_HOME,
@@ -162,7 +220,14 @@ fun FossLinkNavHost(viewModel: MainViewModel) {
                             navController.navigate(NavRoutes.WIZARD) {
                                 popUpTo(NavRoutes.MAIN) { inclusive = true }
                             }
-                        }
+                        },
+                        onOpenSamsungSettings = if (viewModel.isSamsungDevice) {
+                            {
+                                navController.navigate(
+                                    NavRoutes.samsungDeepSleep(NavRoutes.SAMSUNG_MODE_SETTINGS)
+                                )
+                            }
+                        } else null
                     )
                 }
                 composable(NavRoutes.MAIN_ABOUT) {
